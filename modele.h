@@ -1,5 +1,4 @@
 #include <stdexcept>
-//#include <conio.h>
 #include <time.h>
 #include <math.h>
 #include <algorithm>
@@ -8,12 +7,8 @@
 #include <vector>
 #include <tuple>
 #include <conio.h>
-#include <ncurses/ncurses.h>
-//#include <unistd.h>
 
 using namespace std;
-
-#define CHECK(test) if (!(test)) cout << "Test failed in file " << __FILE__ << " line " << __LINE__ << ": " #test << endl
 
 const int GAUCHE = 7, DROITE = 4, HAUT = 8, BAS = 2;
 const int W = 4;
