@@ -1,4 +1,8 @@
+
 #include "modele.h"
+#include "utils.h"
+#include "tests.h"
+
 
 vector<string> split(const string txt, char ch = ' ')
 {
@@ -20,6 +24,7 @@ vector<string> split(const string txt, char ch = ' ')
 
     return strs;
 }
+
 
 void t(vector<string> s) {
     for (auto i: s) {
@@ -155,6 +160,8 @@ int main() {
     attron(COLOR_PAIR(0));
 
     t(v);//printw(jeu.c_str());
+
+    testAll();
     do {
 
         c = getch();
