@@ -2,12 +2,7 @@
 #include "utils.h"
 
 
-int COUNT_FOURS_SPAWNS = 0;
-
-
-
-
-
+//int COUNT_FOURS_SPAWNS = 0;
 
 
 /* plateauVide
@@ -67,7 +62,7 @@ Plateau ajouteTuile(Plateau plateau) {
 
     plateau[i][j] = val;
 
-    if (val == 4) {COUNT_FOURS_SPAWNS++;}
+    //if (val == 4) {COUNT_FOURS_SPAWNS++;}
 
     return plateau;
 }
@@ -169,13 +164,13 @@ Plateau Transpose(Plateau t) {
     return result;
 }
 
-/* Combine
+/* Combine_gauche
  * @param t Plateau
  * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
  * 
  * Exemple avec un Plateau t = {{2, 2, 8, 4}, {2, 0, 16, 16}} renvoie {{4, 0, 8, 4}, {2, 0, 32, 0}}
 */
-Plateau Combine(Plateau t) {
+Plateau Combine_gauche(Plateau t) {
 
     auto combine_line = [](vector<int> t) {
 
@@ -185,6 +180,32 @@ Plateau Combine(Plateau t) {
 
                 t[i] = 2 * t[i];
                 t[i + 1] = 0;
+
+            }
+            
+        }
+
+        return t;
+
+    };
+
+    for (int i = 0; i < t.size(); i++) {
+        t[i] = combine_line(t[i]);
+    }
+
+    return t;
+}
+
+Plateau Combine_droite(Plateau t) {
+
+    auto combine_line = [](vector<int> t) {
+
+        for (int i = t.size(); i > 0; i++) {
+
+            if (t[i] == t[i - 1]) {
+
+                t[i] = 2 * t[i];
+                t[i - 1] = 0;
 
             }
             
@@ -242,32 +263,6 @@ Plateau bougeDroite(Plateau t) {
     return result;
 }
 
-/* bougeBas
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul en bas.
- */
-Plateau bougeBas(Plateau t) {
-
-    t = Transpose(t);
-    t = deplacementDroite(t);
-    t = Transpose(t);
-    
-    return t;
-}
-
-/* bougehaut
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul en haut.
- */
-Plateau bougeHaut(Plateau t) {
-
-    t = Transpose(t);
-    t = deplacementGauche(t);
-    t = Transpose(t);
-    
-    return t;
-}
-
 /* deplacementGauche
  * @param t Plateau
  * @return une copie de t auquel on a effectué un déplacement à gauche dans les règles du jeu 2048.
@@ -275,7 +270,7 @@ Plateau bougeHaut(Plateau t) {
 Plateau deplacementGauche(Plateau t) {
 
     t = bougeGauche(t);
-    t = Combine(t);
+    t = Combine_gauche(t);
     t = bougeGauche(t);
 
     return t;
@@ -288,7 +283,7 @@ Plateau deplacementGauche(Plateau t) {
 Plateau deplacementDroite(Plateau t) {
     
     t = bougeDroite(t);
-    t = Combine(t);
+    t = Combine_droite(t);
     t = bougeDroite(t);
 
     return t;
@@ -326,10 +321,10 @@ Plateau deplacementHaut(Plateau t) {
 */
 bool estTermine(Plateau plateau) {
     bool est_termine = true;
-    plateau = deplacement(plateau, GAUCHE);
-    plateau = deplacement(plateau, DROITE);
-    plateau = deplacement(plateau, HAUT);
-    plateau = deplacement(plateau, BAS);
+    plateau = deplacementGauche(plateau);
+    plateau = deplacementDroite(plateau);
+    plateau = deplacementHaut(plateau);
+    plateau = deplacementBas(plateau);
 
     for (auto i: plateau) {
         for (auto j: i) {
@@ -343,11 +338,14 @@ bool estTermine(Plateau plateau) {
     return est_termine;
 }
 
-/* brute_score
+
+/*
+ brute_score
  * @param n int
  * @return le score correspondant à une tuile de valeur "n" dans le jeu 2048
 */
 int brute_score(int n) {
+    if (n < 4 or n & n-1 != 0) {return 0;}
         
     if (n == 4) {
         return 4;
@@ -358,7 +356,9 @@ int brute_score(int n) {
     
 }
 
-/* score
+
+/*
+ score
  * @param plateau Plateau
  * @return le score correspondant à un plateau dans le jeu 2048
 */
@@ -374,6 +374,7 @@ int score(Plateau plateau) {
         }
     }
 
-    return result - 4 * COUNT_FOURS_SPAWNS; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
+    return result; // - 4 * COUNT_FOURS_SPAWNS; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
 
 }
+
