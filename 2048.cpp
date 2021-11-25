@@ -161,7 +161,7 @@ int main() {
 
     t(v);//printw(jeu.c_str());
 
-    testAll();
+    testall();
     do {
 
         c = getch();

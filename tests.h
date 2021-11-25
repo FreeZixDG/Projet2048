@@ -4,9 +4,10 @@
 
 
 void testlen();
-void testStrip();
-void testMaximumOf();
+void teststrip();
+void testmaximumOf();
 
-void testPlateauVide();
-void testTireDeuxOuQuatre();
-void testAll();
+void testplateauVide();
+void testtireDeuxOuQuatre();
+void testplateauInitial();
+void testall();
