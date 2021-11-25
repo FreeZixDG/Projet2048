@@ -346,7 +346,7 @@ void testall() {
     testTranspose();
     testCombine();
     testbouge();
-
+    testdeplacements();
     testestTermine();
     //testbrute_score();
     testscore();

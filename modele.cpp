@@ -200,7 +200,7 @@ Plateau Combine_droite(Plateau t) {
 
     auto combine_line = [](vector<int> t) {
 
-        for (int i = t.size(); i > 0; i++) {
+        for (int i = t.size(); i > 0; i--) {
 
             if (t[i] == t[i - 1]) {
 
