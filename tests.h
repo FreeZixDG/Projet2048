@@ -3,7 +3,7 @@
 #define CHECK(test) if (!(test)) printw("Test failed in function '%s' line %d : %s\n", __FUNCTION__, __LINE__, #test)
 
 
-void testLen();
+void testlen();
 void testStrip();
 void testMaximumOf();
 
