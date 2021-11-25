@@ -107,6 +107,8 @@ void testajouteTuile() {
         or ((r[2][1] == 2 or r[2][1] == 4) and r[0][2] == 0)
     );
 }
+
+
 void testall() {
 
     testLen();
