@@ -323,3 +323,17 @@ int score(Plateau plateau) {
 
 }
 
+bool estGagnant(Plateau plateau) {
+    bool est_gagnant = false;
+
+    for (auto i: plateau) {
+        for (auto j: i) {
+            if (j >= 2048) {
+                est_gagnant = true;
+            }
+        }
+    }
+
+    return est_gagnant;
+}
+

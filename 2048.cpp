@@ -108,20 +108,35 @@ void t(vector<string> s) {
  * @return une copie de t auquel on a effectué un déplacement dans une direction dans les règles du jeu 2048.
 */
 Plateau deplacement(Plateau plateau, int direction) {
+
+    Plateau old_plateau = plateau;
+
     switch (direction)
     {
     case DROITE:
-        return deplacementDroite(plateau);
+        plateau = deplacementDroite(plateau);
+        break;
     case GAUCHE:
-        return deplacementGauche(plateau);
+        plateau =  deplacementGauche(plateau);
+        break;
     case HAUT:
-        return deplacementHaut(plateau);
+        plateau =  deplacementHaut(plateau);
+        break;
     case BAS:
-        return deplacementBas(plateau);
+        plateau =  deplacementBas(plateau);
+        break;
     default:
         cerr << "Deplacement non-autorise!" << endl;
         exit(-1);
     }
+
+    if (old_plateau != plateau) {
+        plateau = ajouteTuile(plateau);
+    }
+
+    return plateau;
+
+    
 }
 
 
@@ -159,6 +174,7 @@ int main() {
     keypad(stdscr, true);
     attron(COLOR_PAIR(0));
 
+    v = split(jeu);
     t(v);//printw(jeu.c_str());
 
     testall();
@@ -190,7 +206,6 @@ int main() {
             }
 
         if (old_grille != grille) {
-            grille = ajouteTuile(grille);
             tries++;
 
             if (estTermine(grille)) {
@@ -202,6 +217,10 @@ int main() {
             v = split(jeu);
             t(v);
             printw("Score: %d\n", score(grille));
+            
+            if (estGagnant(grille)) {
+                printw("Wow! Tu as obtenu un 2048! (essaie d'aller encore plus loin... :p)");
+            }
         }
 
     } while (c != 27); // Escape

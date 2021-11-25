@@ -328,8 +328,6 @@ void testscore() {
         {0, 0, 0, 0}, // 0 pts
     };
 
-    printw("%d", score(g));
-
     CHECK(score(g) == 24);
 }
 
