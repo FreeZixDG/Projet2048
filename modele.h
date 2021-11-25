@@ -32,3 +32,4 @@ int score(Plateau plateau);
 
 Plateau ajouteTuile(Plateau plateau);
 Plateau Transpose(Plateau plateau);
+Plateau Combine(Plateau t);

@@ -169,6 +169,25 @@ void testTranspose() {
     CHECK(Transpose(g) == r);
 }
 
+void testCombine() {
+    Plateau g = {
+        {4, 2, 2, 0},
+        {4, 0, 8, 8},
+        {2, 0, 2, 0},
+        {4, 8, 0, 0},
+    };
+
+    Plateau r = {
+        {4, 4, 0, 0},
+        {4, 0, 16, 0},
+        {2, 0, 2, 0},
+        {4, 8, 0, 0},
+    };
+
+    CHECK(Combine(g) == r);
+
+}
+
 void testall() {
 
     testlen();
@@ -180,4 +199,5 @@ void testall() {
     testajouteTuile();
     testdessine();
     testTranspose();
+    testCombine();
 }
