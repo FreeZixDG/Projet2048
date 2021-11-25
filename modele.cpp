@@ -5,29 +5,20 @@
 //int COUNT_FOURS_SPAWNS = 0;
 
 
-/* plateauVide
- * @param w int, largeur
- * @param h int, hauteur
- * @return Plateau, un plateau de longeur w, et de hauteur h.
-*/
+
 Plateau plateauVide() {
     Plateau plateau(H, vector<int>(W));
 
     return plateau;
 }
 
-/* tireDeuxOuQuatre
- * @return int, 2 (proba = 0.9), ou 4 (proba = 0.1)
-*/
+
 int tireDeuxOuQuatre() {
     return rand() % 100 + 1 <= 10 ? 4: 2;
 }
 
 
-/* ajouteTuile
- * @param plateau Plateau
- * @return Le meme plateau auquel on ajouté une tuile (2 ou 4) dans un espace disponible aléatoire.
-*/
+
 Plateau ajouteTuile(Plateau plateau) {
 
     /*list_of_index
@@ -67,11 +58,7 @@ Plateau ajouteTuile(Plateau plateau) {
     return plateau;
 }
 
-/* plateauInitial
- * @param w int, largeur (default = 4)
- * @param h int, hauteur (default = 4)
- * @return Plateau, un plateau qui contient une tuile (2 ou 4) placee aleatoirement.
-*/
+
 Plateau plateauInitial() {
     Plateau plateau = plateauVide();
     plateau = ajouteTuile(plateau);
@@ -79,10 +66,7 @@ Plateau plateauInitial() {
     return plateau;
 }
 
-/* dessine
- * @param g Plateau
- * @return string, le plateau sous forme d'une chaine de caracteres, affichable dans la console.
-*/
+
 string dessine(Plateau g) {
 
     string result = "";
@@ -148,10 +132,7 @@ string dessine(Plateau g) {
 
 }
 
-/* Transpose
- * @param t Plateau
- * @return un Plateau ou chaque ligne correspond à chaque colone de t
-*/
+
 Plateau Transpose(Plateau t) {
     Plateau result(t[0].size(), vector<int>(t.size())); 
 
@@ -164,12 +145,7 @@ Plateau Transpose(Plateau t) {
     return result;
 }
 
-/* Combine_gauche
- * @param t Plateau
- * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
- * 
- * Exemple avec un Plateau t = {{2, 2, 8, 4}, {2, 0, 16, 16}} renvoie {{4, 0, 8, 4}, {2, 0, 32, 0}}
-*/
+
 Plateau Combine_gauche(Plateau t) {
 
     auto combine_line = [](vector<int> t) {
@@ -222,10 +198,7 @@ Plateau Combine_droite(Plateau t) {
     return t;
 }
 
-/* bougeGauche
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à gauche.
- */
+
 Plateau bougeGauche(Plateau t) {
 
     Plateau result = t;
@@ -243,10 +216,7 @@ Plateau bougeGauche(Plateau t) {
     return result;
 }
 
-/* bougeDroite
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à droite.
- */
+
 Plateau bougeDroite(Plateau t) {
     
     Plateau result = t;
@@ -263,10 +233,7 @@ Plateau bougeDroite(Plateau t) {
     return result;
 }
 
-/* deplacementGauche
- * @param t Plateau
- * @return une copie de t auquel on a effectué un déplacement à gauche dans les règles du jeu 2048.
-*/
+
 Plateau deplacementGauche(Plateau t) {
 
     t = bougeGauche(t);
@@ -276,10 +243,7 @@ Plateau deplacementGauche(Plateau t) {
     return t;
 }
 
-/* deplacementDroite
- * @param t Plateau
- * @return une copie de t auquel on a effectué un déplacement à droite dans les règles du jeu 2048.
-*/
+
 Plateau deplacementDroite(Plateau t) {
     
     t = bougeDroite(t);
@@ -289,10 +253,7 @@ Plateau deplacementDroite(Plateau t) {
     return t;
 }
 
-/* deplacementBas
- * @param t Plateau
- * @return une copie de t auquel on a effectué un déplacement en bas dans les règles du jeu 2048.
-*/
+
 Plateau deplacementBas(Plateau t) {
 
     t = Transpose(t);
@@ -302,10 +263,7 @@ Plateau deplacementBas(Plateau t) {
     return t;
 }
 
-/* deplacementHaut
- * @param t Plateau
- * @return une copie de t auquel on a effectué un déplacement en haut dans les règles du jeu 2048.
-*/
+
 Plateau deplacementHaut(Plateau t) {
 
     t = Transpose(t);
@@ -315,10 +273,7 @@ Plateau deplacementHaut(Plateau t) {
     return t;
 }
 
-/* estTermine
- * @param t Plateau
- * @return true si la partie est terminée (=aucun mouvement ne modifie le plateau), false sinon.
-*/
+
 bool estTermine(Plateau plateau) {
     bool est_termine = true;
     plateau = deplacementGauche(plateau);
@@ -339,11 +294,6 @@ bool estTermine(Plateau plateau) {
 }
 
 
-/*
- brute_score
- * @param n int
- * @return le score correspondant à une tuile de valeur "n" dans le jeu 2048
-*/
 int brute_score(int n) {
     if (n < 4 or n & n-1 != 0) {return 0;}
         
@@ -357,11 +307,6 @@ int brute_score(int n) {
 }
 
 
-/*
- score
- * @param plateau Plateau
- * @return le score correspondant à un plateau dans le jeu 2048
-*/
 int score(Plateau plateau) {
 
     int result = 0;
