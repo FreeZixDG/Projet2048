@@ -108,6 +108,50 @@ void testajouteTuile() {
     );
 }
 
+void testdessine() {
+    if (W == 4 and H == 4) {
+
+        Plateau g = plateauVide();
+        g[0][1] = 2;
+        g[1][0] = 4;
+        
+        string plateau_affiche = dessine(g);
+
+        g[3][2] = 16;
+
+        string plateau_affiche_16 = dessine(g);
+
+
+        string r = (
+            "*****************\n"
+            "*   * 2 *   *   * \n"
+            "*****************\n"
+            "* 4 *   *   *   * \n"
+            "*****************\n"
+            "*   *   *   *   * \n"
+            "*****************\n"
+            "*   *   *   *   * \n"
+            "*****************\n"
+        );
+
+        string r16 = (
+            "*********************\n"
+            "*    * 2  *    *    * \n"
+            "*********************\n"
+            "* 4  *    *    *    * \n"
+            "*********************\n"
+            "*    *    *    *    * \n"
+            "*********************\n"
+            "*    *    * 16 *    * \n"
+            "*********************\n"
+        );
+
+        CHECK(plateau_affiche == r);
+        CHECK(plateau_affiche_16 == r16);
+
+    }
+}
+
 
 void testall() {
 
@@ -118,5 +162,6 @@ void testall() {
     testtireDeuxOuQuatre();
     testplateauInitial();
     testajouteTuile();
+    testdessine();
     
 }
