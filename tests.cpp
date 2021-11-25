@@ -4,7 +4,7 @@
 
 
 
-void testLen() {
+void testlen() {
     int a = 45641;
     int b_base2 = 5; // 5 base 10 == 101 base 2
     int c = 9;
@@ -152,10 +152,26 @@ void testdessine() {
     }
 }
 
+void testTranspose() {
+    Plateau g = {
+        {4, 2, 2, 0},
+        {4, 2, 8, 16},
+        {0, 0, 2, 0}
+    };
+
+    Plateau r = {
+        {4, 4, 0},
+        {2, 2, 0},
+        {2, 8, 2},
+        {0, 16, 0}
+    };
+
+    CHECK(Transpose(g) == r);
+}
 
 void testall() {
 
-    testLen();
+    testlen();
     teststrip();
     testmaximumOf();
     testplateauVide();
@@ -163,5 +179,5 @@ void testall() {
     testplateauInitial();
     testajouteTuile();
     testdessine();
-    
+    testTranspose();
 }
