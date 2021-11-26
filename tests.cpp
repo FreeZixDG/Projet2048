@@ -27,7 +27,9 @@ void teststrip() {
 
 void testmaximumOf() {
 
-    Plateau g = {
+    Grille g;
+
+    g.m_plateau = {
         {0, 0, 4, 2},
         {4, 2, 0, 8},
         {16, 2, 128, 64},
