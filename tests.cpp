@@ -322,6 +322,7 @@ void testbrute_score() {
 }
 
 void testscore() {
+    int COUNT_FOUR_SPAWNED = 0;
     Plateau g = {
         {0, 0, 2, 0}, // 0 pts
         {0, 0, 4, 4}, // 8 pts

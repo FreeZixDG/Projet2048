@@ -20,6 +20,13 @@
   "files.associations": {
     "vector": "cpp",
     "stdexcept": "cpp",
-    "numeric": "cpp"
+    "numeric": "cpp",
+    "iostream": "cpp",
+    "*.tcc": "cpp",
+    "bitset": "cpp",
+    "unordered_map": "cpp",
+    "istream": "cpp",
+    "functional": "cpp",
+    "utility": "cpp"
   }
 }
