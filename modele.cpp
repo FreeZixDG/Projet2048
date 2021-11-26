@@ -2,7 +2,7 @@
 #include "utils.h"
 
 
-//int COUNT_FOURS_SPAWNS = 0;
+int COUNT_FOURS_SPAWNS = 0;
 
 
 
@@ -53,7 +53,7 @@ Plateau ajouteTuile(Plateau plateau) {
 
     plateau[i][j] = val;
 
-    //if (val == 4) {COUNT_FOURS_SPAWNS++;}
+    if (val == 4) {COUNT_FOURS_SPAWNS++;}
 
     return plateau;
 }
@@ -319,7 +319,7 @@ int score(Plateau plateau) {
         }
     }
 
-    return result; // - 4 * COUNT_FOURS_SPAWNS; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
+    return result - 4 * COUNT_FOURS_SPAWNS; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
 
 }
 
@@ -335,5 +335,42 @@ bool estGagnant(Plateau plateau) {
     }
 
     return est_gagnant;
+}
+
+/* deplacement
+ * @param t Plateau
+ * @param direction int, une direction (haut, gauche, droite ou bas)
+ * @return une copie de t auquel on a effectué un déplacement dans une direction dans les règles du jeu 2048.
+*/
+Plateau deplacement(Plateau plateau, int direction) {
+
+    Plateau old_plateau = plateau;
+
+    switch (direction)
+    {
+    case DROITE:
+        plateau = deplacementDroite(plateau);
+        break;
+    case GAUCHE:
+        plateau =  deplacementGauche(plateau);
+        break;
+    case HAUT:
+        plateau =  deplacementHaut(plateau);
+        break;
+    case BAS:
+        plateau =  deplacementBas(plateau);
+        break;
+    default:
+        cerr << "Deplacement non-autorise!" << endl;
+        exit(-1);
+    }
+
+    if (old_plateau != plateau) {
+        plateau = ajouteTuile(plateau);
+    }
+
+    return plateau;
+
+    
 }
 
