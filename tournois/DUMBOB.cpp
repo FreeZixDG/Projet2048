@@ -65,18 +65,41 @@ Plateau get_plateau(string path, int &tries, int &score)
         
     }
 
+    fichier.close();
+
     return g;
 }
 
-int main() {
+void send_move(string path, string name, int tries, char move)
+{
+    ofstream fichier;
+    fichier.open(path);
 
+    if (!fichier)
+    {
+        fichier << name << endl;
+    }
+
+    fichier << tries << ' ' << move << endl;
+
+    fichier.close();
+
+}
+
+int main() {
+    int actual_try = 0;
     int tries;
     int score;
+    Plateau plateau = get_plateau("configuration.txt", tries, score);
 
-    Plateau t = get_plateau("configuration.txt", tries, score);
+    if (tries == actual_try)
+    {
+        send_move("mouvement.txt", "BOB", tries, 'H');
+    }
+
     cout << tries << endl;
     cout << score << endl;
-    cout << dessine(t);
+    cout << dessine(plateau);
 
     return 0;
 }
