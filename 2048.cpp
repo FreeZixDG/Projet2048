@@ -2,6 +2,7 @@
 #include "modele.h"
 #include "utils.h"
 #include "tests.h"
+#include <curses.h>
 
 
 vector<string> split(const string txt, char ch = ' ')

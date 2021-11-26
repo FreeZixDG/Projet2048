@@ -1,7 +1,8 @@
 #include "modele.h"
 #include "utils.h"
 #include "tests.h"
-
+#include <curses.h>
+#define CHECK(test) if (!(test)) printw("Test failed in function '%s' line %d : %s\n", __FUNCTION__, __LINE__, #test)
 
 
 void testlen() {
