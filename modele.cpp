@@ -300,36 +300,6 @@ bool estTermine(Plateau plateau) {
     return est_termine;
 }
 
-
-/*int brute_score(int n) {
-    if (n < 4 or n & n-1 != 0) {return 0;}
-        
-    if (n == 4) {
-        return 4;
-    }
-
-    return n + 2 * brute_score(n / 2);
-
-    
-}*/
-
-
-/*int score(Plateau plateau) {
-
-    int result = 0;
-
-    for (auto i: plateau.grille) {
-        for (int j: i) {
-            if (j >= 4) {
-                result += brute_score(j);
-            }
-        }
-    }
-
-    return result - 4 * plateau.score; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
-
-}*/
-
 bool estGagnant(Plateau plateau) {
     bool est_gagnant = false;
 

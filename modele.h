@@ -77,12 +77,7 @@ bool estTermine(Plateau plateau);
 bool estGagnant(Plateau plateau);
 
 
-/*
- score
- * @param plateau Plateau
- * @return le score correspondant à un plateau dans le jeu 2048
-*/
-int score(Plateau plateau);
+
 
 /* ajouteTuile
  * @param plateau Plateau
@@ -123,10 +118,3 @@ Plateau bougeGauche(Plateau t);
  * @return une copie de t auquel on a décalé tous les éléments non nul à droite.
  */
 Plateau bougeDroite(Plateau t);
-
-/*
- brute_score
- * @param n int
- * @return le score correspondant à une tuile de valeur "n" dans le jeu 2048
-*/
-int brute_score(int n);
