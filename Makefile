@@ -1,4 +1,4 @@
-OBJ = 2048.o modele.o tests.o utils.o
+OBJ = 2048.o modele.o tests.o utils.o Plateau.o
 CC = g++
 LFLAGS = -lncurses
 INCLUDES = -I "C:/msys64/mingw64/include/ncursesw"
@@ -17,4 +17,7 @@ tests.o: tests.cpp tests.h
 
 utils.o: utils.cpp utils.h
 	$(CC) -c utils.cpp
+
+Plateau.o: Plateau.cpp Plateau.h
+	$(CC) -c Plateau.cpp
 

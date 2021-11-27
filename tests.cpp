@@ -27,21 +27,21 @@ void teststrip() {
 
 void testmaximumOf() {
 
-    Plateau g = {
+    Grille g = {
         {0, 0, 4, 2},
         {4, 2, 0, 8},
         {16, 2, 128, 64},
         {2, 4, 0, 8}
     };
 
-    Plateau g2 = {
+    Grille g2 = {
         {0, 0, 4, 2},
         {4, 2, 0, 8},
         {16, 2, 8, 64},
         {2, 4, 0, 8}
     };
 
-    Plateau g3 = {
+    Grille g3 = {
         {0, 256, 4, 2},
         {4, 2, 0, 8},
         {16, 256, 8, 64},
@@ -55,14 +55,14 @@ void testmaximumOf() {
 }
 
 void testplateauVide() {
-    Plateau g = {
+    Plateau g({
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0}
-    };
+    });
 
-    CHECK( plateauVide() == g );
+    CHECK( plateauVide().grille == g.grille );
 }
 
 
@@ -79,9 +79,10 @@ void testtireDeuxOuQuatre() {
 
 void testplateauInitial() {
     Plateau g = plateauInitial();
+
     int how_many_zeros = 0;
 
-    for (auto i: g) {
+    for (auto i: g.grille) {
         for (auto j: i) {
             if(j == 0){
                 how_many_zeros++;
@@ -89,36 +90,36 @@ void testplateauInitial() {
         }
     }
 
-    CHECK(g.size() == H and g[0].size() == W);
+    CHECK(g.grille.size() == H and g.grille[0].size() == W);
     CHECK(H*W == how_many_zeros + 1);
 }
 
 void testajouteTuile() {
-    Plateau r = {
+    Plateau r({
         {4, 8, 0, 2},
         {4, 2, 2, 8},
         {16, 0, 2, 8},
         {4, 2, 8, 4}
-    };
+    });
 
     r = ajouteTuile(r);
 
     CHECK(
-        ((r[0][2] == 2 or r[0][2] == 4) and r[2][1] == 0)
-        or ((r[2][1] == 2 or r[2][1] == 4) and r[0][2] == 0)
+        ((r.grille[0][2] == 2 or r.grille[0][2] == 4) and r.grille[2][1] == 0)
+        or ((r.grille[2][1] == 2 or r.grille[2][1] == 4) and r.grille[0][2] == 0)
     );
 }
 
 void testdessine() {
     if (W == 4 and H == 4) {
 
-        Plateau g = plateauVide();
-        g[0][1] = 2;
-        g[1][0] = 4;
+        Plateau g;
+        g.grille[0][1] = 2;
+        g.grille[1][0] = 4;
         
         string plateau_affiche = dessine(g);
 
-        g[3][2] = 16;
+        g.grille[3][2] = 16;
 
         string plateau_affiche_16 = dessine(g);
 
@@ -154,74 +155,74 @@ void testdessine() {
 }
 
 void testTranspose() {
-    Plateau g = {
+    Plateau g({
         {4, 2, 2, 0},
         {4, 2, 8, 16},
         {0, 0, 2, 0}
-    };
+    });
 
-    Plateau r = {
+    Plateau r({
         {4, 4, 0},
         {2, 2, 0},
         {2, 8, 2},
         {0, 16, 0}
-    };
+    });
 
-    CHECK(Transpose(g) == r);
+    CHECK(Transpose(g).grille == r.grille);
 }
 
 void testCombine() {
-    Plateau g = {
+    Plateau g({
         {4, 2, 2, 0},
         {4, 0, 8, 8},
         {2, 0, 2, 0},
         {4, 8, 0, 0},
-    };
+    });
 
-    Plateau r = {
+    Plateau r({
         {4, 4, 0, 0},
         {4, 0, 16, 0},
         {2, 0, 2, 0},
         {4, 8, 0, 0},
-    };
+    });
 
-    CHECK(Combine_gauche(g) == r);
+    CHECK(Combine_gauche(g).grille == r.grille);
 
 }
 
 void testbouge() {
 
-    Plateau g = {
+    Plateau g({
         {4, 2, 2, 0},
         {4, 0, 2, 8},
         {2, 0, 2, 0},
         {4, 8, 2, 4},
         {0, 0, 0, 0},
-    };
+    });
 
-    Plateau r_gauche = {
+    Plateau r_gauche({
         {4, 2, 2, 0},
         {4, 2, 8, 0},
         {2, 2, 0, 0},
         {4, 8, 2, 4},
         {0, 0, 0, 0}
-    };
+    });
 
-    Plateau r_droite = {
+    Plateau r_droite({
         {0, 4, 2, 2},
         {0, 4, 2, 8},
         {0, 0, 2, 2},
         {4, 8, 2, 4},
         {0, 0, 0, 0}
-    };
+    });
 
-    CHECK(bougeGauche(g) == r_gauche);
-    CHECK(bougeDroite(g) == r_droite);
+    CHECK(bougeGauche(g).grille == r_gauche.grille);
+    CHECK(bougeDroite(g).grille == r_droite.grille);
 
 }
 
 void testdeplacements() {
-    Plateau g = {
+    Plateau g({
         {4, 2, 2, 0},
         {4, 0, 2, 8},
         {2, 0, 2, 0},
@@ -229,9 +230,9 @@ void testdeplacements() {
         {2, 2, 8, 8},
         {0, 4, 4, 4},
         {0, 0, 0, 0}
-    };
+    });
 
-    Plateau r_gauche = {
+    Plateau r_gauche({
         {4, 4, 0, 0},
         {4, 2, 8, 0},
         {4, 0, 0, 0},
@@ -239,9 +240,9 @@ void testdeplacements() {
         {4, 16, 0, 0},
         {8, 4, 0, 0},
         {0, 0, 0, 0}
-    };
+    });
 
-    Plateau r_droite = {
+    Plateau r_droite({
         {0, 0, 4, 4},
         {0, 4, 2, 8},
         {0, 0, 0, 4},
@@ -249,9 +250,9 @@ void testdeplacements() {
         {0, 0, 4, 16},
         {0, 0, 4, 8},
         {0, 0, 0, 0}
-    };
+    });
 
-    Plateau r_haut = {
+    Plateau r_haut({
         {8, 2, 4, 16},
         {2, 8, 4, 8},
         {4, 2, 8, 4},
@@ -259,9 +260,9 @@ void testdeplacements() {
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0}
-    };
+    });
 
-    Plateau r_bas = {
+    Plateau r_bas({
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0},
@@ -269,68 +270,33 @@ void testdeplacements() {
         {2, 8, 4, 8},
         {4, 2, 8, 16},
         {2, 4, 4, 4}
-    };
+    });
 
-    CHECK(deplacementGauche(g) == r_gauche);
-    CHECK(deplacementDroite(g) == r_droite);
-    CHECK(deplacementHaut(g) == r_haut);
-    CHECK(deplacementBas(g) == r_bas);
+    CHECK(deplacementGauche(g).grille == r_gauche.grille);
+    CHECK(deplacementDroite(g).grille == r_droite.grille);
+    CHECK(deplacementHaut(g).grille == r_haut.grille);
+    CHECK(deplacementBas(g).grille == r_bas.grille);
 }
 
 void testestTermine() {
-    Plateau non = {
+    Plateau non({
         {2, 2, 8, 2},
         {4, 8, 16, 4},
         {2, 32, 64, 2},
         {16, 128, 16, 4}
-    };
+    });
 
-    Plateau oui = {
+    Plateau oui({
         {2, 8, 64, 8},
         {8, 2, 16, 2},
         {4, 32, 256, 8},
         {2, 4, 8, 2}
-    };
+    });
 
     CHECK(!estTermine( plateauVide() ));
     CHECK(!estTermine( plateauInitial() ));
     CHECK(!estTermine( non ));
     CHECK(estTermine( oui ));
-}
-
-void testbrute_score() {
-
-    /*Invalid arguments return 0*/
-    CHECK(brute_score(-1) == 0);
-    CHECK(brute_score(0) == 0);
-    CHECK(brute_score(1) == 0);
-    CHECK(brute_score(2) == 0);
-    CHECK(brute_score(3) == 0);
-    CHECK(brute_score(5) == 0);
-    CHECK(brute_score(47) == 0);
-    CHECK(brute_score(264) == 0);
-    CHECK(brute_score(4862) == 0);
-    CHECK(brute_score(4867) == 0);
-    /*---------------------------*/
-
-    CHECK(brute_score(4) == 4);
-    CHECK(brute_score(8) == 16);
-    CHECK(brute_score(16) == 48);
-    CHECK(brute_score(32) == 128);
-    CHECK(brute_score(64) == 320);
-
-}
-
-void testscore() {
-    int COUNT_FOUR_SPAWNED = 0;
-    Plateau g = {
-        {0, 0, 2, 0}, // 0 pts
-        {0, 0, 4, 4}, // 8 pts
-        {0, 8, 0, 0}, // 16 pts
-        {0, 0, 0, 0}, // 0 pts
-    };
-
-    CHECK(score(g) == 24);
 }
 
 void testall() {
@@ -348,7 +314,5 @@ void testall() {
     testbouge();
     testdeplacements();
     testestTermine();
-    //testbrute_score();
-    testscore();
 
 }

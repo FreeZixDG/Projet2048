@@ -1,4 +1,3 @@
-
 #include "modele.h"
 #include "utils.h"
 #include "tests.h"
@@ -171,7 +170,7 @@ int main() {
                 break;
             }
 
-        if (old_grille != grille) {
+        if (old_grille.grille != grille.grille) {
             tries++;
 
             if (estTermine(grille)) {
@@ -182,7 +181,7 @@ int main() {
             jeu = dessine(grille);
             v = split(jeu);
             t(v);
-            printw("Score: %d\n", score(grille));
+            printw("Score: %d\n", grille.score);
             
             if (estGagnant(grille)) {
                 printw("Wow! Tu as obtenu un 2048! (essaie d'aller encore plus loin... :p)");
@@ -196,7 +195,7 @@ int main() {
     v = split(jeu);
     t(v);//printw(dessine(grille).c_str());
     printw("Jeu termine!\n");
-    printw("Votre score est de: %d\n", score(grille));
+    printw("Votre score est de: %d\n", grille.score);
 
     printw("Appuyer sur 'echap' pour quitter");
     do{c = getch();} while(c != 27);

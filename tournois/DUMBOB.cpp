@@ -61,7 +61,7 @@ Plateau get_plateau(string path, int &tries, int &score)
         fichier >> line;
         vector<int> c = extract_numbers(line);
 
-        g[i] = c;
+        g.grille[i] = c;
         
     }
 

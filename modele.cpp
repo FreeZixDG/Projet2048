@@ -2,12 +2,9 @@
 #include "utils.h"
 
 
-int COUNT_FOURS_SPAWNS = 0;
-
-
 
 Plateau plateauVide() {
-    Plateau plateau(H, vector<int>(W));
+    Plateau plateau;
 
     return plateau;
 }
@@ -28,9 +25,9 @@ Plateau ajouteTuile(Plateau plateau) {
     auto list_of_index = [plateau](int value){
         vector<tuple<int, int>> result;
 
-        for (int i = 0; i < plateau.size(); i++) {
-            for (int j = 0; j < plateau[0].size(); j++) {
-                if (plateau[i][j] == value) {
+        for (int i = 0; i < plateau.grille.size(); i++) {
+            for (int j = 0; j < plateau.grille[0].size(); j++) {
+                if (plateau.grille[i][j] == value) {
 
                     result.push_back(make_tuple(i, j));
 
@@ -51,17 +48,16 @@ Plateau ajouteTuile(Plateau plateau) {
 
     int val = tireDeuxOuQuatre();
 
-    plateau[i][j] = val;
+    plateau.grille[i][j] = val;
 
-    if (val == 4) {COUNT_FOURS_SPAWNS++;}
+    if (val == 4) {plateau.score++;}
 
     return plateau;
 }
 
 
 Plateau plateauInitial() {
-    Plateau plateau = plateauVide();
-    plateau = ajouteTuile(plateau);
+    Plateau plateau = ajouteTuile(plateau);
 
     return plateau;
 }
@@ -70,7 +66,7 @@ Plateau plateauInitial() {
 string dessine(Plateau g) {
 
     string result = "";
-    int max_number = maximumOf(g);
+    int max_number = maximumOf(g.grille);
     int lenght_max = len(max_number);
 
     /* affiche_bord
@@ -79,7 +75,7 @@ string dessine(Plateau g) {
      * Ajoute à result une série de '*' pour faire le bords horizontal du plateau
     */
     auto affiche_bord = [&result](Plateau t, int lenght_max) {
-        for (int k = 0; k < t[0].size(); k++) {
+        for (int k = 0; k < t.grille[0].size(); k++) {
             for (int l = 0; l < (3 + lenght_max); l++) {
                 result += "*";
             }
@@ -110,13 +106,13 @@ string dessine(Plateau g) {
 
     };
 
-    for (int i = 0; i < g.size(); i++) {
+    for (int i = 0; i < g.grille.size(); i++) {
         affiche_bord(g, lenght_max);
         
         result += "* ";
-        for (int j = 0; j < g[i].size(); j++) {
+        for (int j = 0; j < g.grille[i].size(); j++) {
 
-            string expression = g[i][j] == 0 ? " " : to_string(g[i][j]);
+            string expression = g.grille[i][j] == 0 ? " " : to_string(g.grille[i][j]);
 
             set_middle_width(expression, lenght_max);
 
@@ -134,15 +130,18 @@ string dessine(Plateau g) {
 
 
 Plateau Transpose(Plateau t) {
-    Plateau result(t[0].size(), vector<int>(t.size())); 
+    Grille result(t.grille[0].size(), vector<int>(t.grille.size()));
 
-    for (int i = 0; i < t.size(); i++) {
-        for (int j = 0; j < t[0].size(); j++) {
-            result[j][i] = t[i][j];
+
+    for (int i = 0; i < t.grille.size(); i++) {
+        for (int j = 0; j < t.grille[0].size(); j++) {
+            result[j][i] = t.grille[i][j];
         }
     }
+
+    t.grille = result;
     
-    return result;
+    return t;
 }
 
 
@@ -165,8 +164,8 @@ Plateau Combine_gauche(Plateau t) {
 
     };
 
-    for (int i = 0; i < t.size(); i++) {
-        t[i] = combine_line(t[i]);
+    for (int i = 0; i < t.grille.size(); i++) {
+        t.grille[i] = combine_line(t.grille[i]);
     }
 
     return t;
@@ -191,8 +190,8 @@ Plateau Combine_droite(Plateau t) {
 
     };
 
-    for (int i = 0; i < t.size(); i++) {
-        t[i] = combine_line(t[i]);
+    for (int i = 0; i < t.grille.size(); i++) {
+        t.grille[i] = combine_line(t.grille[i]);
     }
 
     return t;
@@ -201,36 +200,40 @@ Plateau Combine_droite(Plateau t) {
 
 Plateau bougeGauche(Plateau t) {
 
-    Plateau result = t;
+    Grille result = t.grille;
     
     for (auto &i : result) {
         i = strip(i);
-        int number_of_zeros = t[0].size() - i.size();
+        int number_of_zeros = t.grille[0].size() - i.size();
 
 
         for (int k = 0; k < number_of_zeros; k++) {
             i.push_back(0);
         }
     }
+
+    t.grille = result;
     
-    return result;
+    return t;
 }
 
 
 Plateau bougeDroite(Plateau t) {
     
-    Plateau result = t;
+    Grille result = t.grille;
     
     for (auto &i: result) {
         i = strip(i);
-        int number_of_zeros = t[0].size() - i.size();
+        int number_of_zeros = t.grille[0].size() - i.size();
 
         for (int k = 0; k < number_of_zeros; k++){
             i.insert(i.begin(), 0);
         }
     }
+
+    t.grille = result;
     
-    return result;
+    return t;
 }
 
 
@@ -281,7 +284,7 @@ bool estTermine(Plateau plateau) {
     plateau = deplacementHaut(plateau);
     plateau = deplacementBas(plateau);
 
-    for (auto i: plateau) {
+    for (auto i: plateau.grille) {
         for (auto j: i) {
             if (j == 0) {
                 est_termine = false;
@@ -294,7 +297,7 @@ bool estTermine(Plateau plateau) {
 }
 
 
-int brute_score(int n) {
+/*int brute_score(int n) {
     if (n < 4 or n & n-1 != 0) {return 0;}
         
     if (n == 4) {
@@ -304,14 +307,14 @@ int brute_score(int n) {
     return n + 2 * brute_score(n / 2);
 
     
-}
+}*/
 
 
-int score(Plateau plateau) {
+/*int score(Plateau plateau) {
 
     int result = 0;
 
-    for (auto i: plateau) {
+    for (auto i: plateau.grille) {
         for (int j: i) {
             if (j >= 4) {
                 result += brute_score(j);
@@ -319,14 +322,14 @@ int score(Plateau plateau) {
         }
     }
 
-    return result - 4 * COUNT_FOURS_SPAWNS; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
+    return result - 4 * plateau.score; // On ne compte pas les tuiles "4" qui sont apparues d'elles mêmes.
 
-}
+}*/
 
 bool estGagnant(Plateau plateau) {
     bool est_gagnant = false;
 
-    for (auto i: plateau) {
+    for (auto i: plateau.grille) {
         for (auto j: i) {
             if (j >= 2048) {
                 est_gagnant = true;
@@ -365,7 +368,7 @@ Plateau deplacement(Plateau plateau, int direction) {
         exit(-1);
     }
 
-    if (old_plateau != plateau) {
+    if (old_plateau.grille != plateau.grille) {
         plateau = ajouteTuile(plateau);
     }
 
