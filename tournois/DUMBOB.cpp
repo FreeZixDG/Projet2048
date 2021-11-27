@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <typeinfo>
 #include <string>
 #include <stdlib.h>
 #include "../modele.h"
@@ -43,7 +42,7 @@ vector<int> extract_numbers(string s)
     return result;
 }
 
-Plateau get_plateau(string path, int &tries, int &score)
+Plateau readInfo(string path, int &tries, int &score)
 {
     ifstream fichier;
     fichier.open(path);
@@ -70,19 +69,27 @@ Plateau get_plateau(string path, int &tries, int &score)
     return g;
 }
 
-void send_move(string path, string name, int tries, char move)
+void writeMove(string path, string name, int tries, char move)
 {
     ofstream fichier;
-    fichier.open(path);
 
-    if (!fichier)
+    if (tries == 0)
     {
+        fichier.open(path);
         fichier << name << endl;
+        fichier.close();
+        return;
+    }
+    else
+    {
+        fichier.open(path, fstream::app);
+
+        fichier << tries << ' ' << move << endl;
+
+        fichier.close();
     }
 
-    fichier << tries << ' ' << move << endl;
-
-    fichier.close();
+    
 
 }
 
@@ -90,11 +97,12 @@ int main() {
     int actual_try = 0;
     int tries;
     int score;
-    Plateau plateau = get_plateau("configuration.txt", tries, score);
+    Plateau plateau = readInfo("configuration.txt", tries, score);
 
     if (tries == actual_try)
     {
-        send_move("mouvement.txt", "BOB", tries, 'H');
+        writeMove("mouvement.txt", "BOB", tries, 'H');
+        actual_try++;
     }
 
     cout << tries << endl;
