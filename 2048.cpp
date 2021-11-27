@@ -203,3 +203,14 @@ int main() {
     endwin();
     return 0;
 }
+
+/*int main()
+{
+
+    Plateau g = plateauInitial();
+
+    cout << dessine(g);
+
+
+    return 0;
+}*/

@@ -50,14 +50,14 @@ Plateau ajouteTuile(Plateau plateau) {
 
     plateau.grille[i][j] = val;
 
-    if (val == 4) {plateau.score++;}
-
     return plateau;
 }
 
 
 Plateau plateauInitial() {
-    Plateau plateau = ajouteTuile(plateau);
+    Plateau plateau;
+
+    plateau = ajouteTuile(plateau);
 
     return plateau;
 }
@@ -145,16 +145,19 @@ Plateau Transpose(Plateau t) {
 }
 
 
-Plateau Combine_gauche(Plateau t) {
+Plateau Combine_gauche(Plateau plateau) {
 
-    auto combine_line = [](vector<int> t) {
+    auto combine_line = [&plateau](vector<int> t) {
 
         for (int i = 0; i < t.size() - 1; i++) {
 
             if (t[i] == t[i + 1]) {
 
                 t[i] = 2 * t[i];
+                plateau.score += t[i];
                 t[i + 1] = 0;
+
+                
 
             }
             
@@ -164,22 +167,23 @@ Plateau Combine_gauche(Plateau t) {
 
     };
 
-    for (int i = 0; i < t.grille.size(); i++) {
-        t.grille[i] = combine_line(t.grille[i]);
+    for (int i = 0; i < plateau.grille.size(); i++) {
+        plateau.grille[i] = combine_line(plateau.grille[i]);
     }
 
-    return t;
+    return plateau;
 }
 
-Plateau Combine_droite(Plateau t) {
+Plateau Combine_droite(Plateau plateau) {
 
-    auto combine_line = [](vector<int> t) {
+    auto combine_line = [&plateau](vector<int> t) {
 
         for (int i = t.size() - 1; i > 0; i--) {
 
             if (t[i] == t[i - 1]) {
 
                 t[i] = 2 * t[i];
+                plateau.score += t[i];
                 t[i - 1] = 0;
 
             }
@@ -190,11 +194,11 @@ Plateau Combine_droite(Plateau t) {
 
     };
 
-    for (int i = 0; i < t.grille.size(); i++) {
-        t.grille[i] = combine_line(t.grille[i]);
+    for (int i = 0; i < plateau.grille.size(); i++) {
+        plateau.grille[i] = combine_line(plateau.grille[i]);
     }
 
-    return t;
+    return plateau;
 }
 
 
