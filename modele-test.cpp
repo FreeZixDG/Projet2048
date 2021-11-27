@@ -1,60 +1,9 @@
+#include <iostream>
 #include "modele.h"
-#include "utils.h"
-#include "tests.h"
-#include <curses.h>
-#define CHECK(test) if (!(test)) printw("Test failed in function '%s' line %d : %s\n", __FUNCTION__, __LINE__, #test)
-
 using namespace std;
 
-
-void testlen() {
-    int a = 45641;
-    int b_base2 = 5; // 5 base 10 == 101 base 2
-    int c = 9;
-
-    CHECK(len(a) == 5);
-    CHECK(len(b_base2, 2) == 3);
-    CHECK(len(c) == 1);
-}
-
-void teststrip() {
-    vector<int> g = {4, 0, 8, 0};
-    vector<int> g2 = {0, 0, 8, 0};
-    vector<int> g3 = {0, 0, 0, 0};
-
-    CHECK( strip(g) == vector<int>({4, 8}) );
-    CHECK( strip(g2) == vector<int>({8}) );
-    CHECK( strip(g3) == vector<int>({}) );
-};
-
-void testmaximumOf() {
-
-    Grille g = {
-        {0, 0, 4, 2},
-        {4, 2, 0, 8},
-        {16, 2, 128, 64},
-        {2, 4, 0, 8}
-    };
-
-    Grille g2 = {
-        {0, 0, 4, 2},
-        {4, 2, 0, 8},
-        {16, 2, 8, 64},
-        {2, 4, 0, 8}
-    };
-
-    Grille g3 = {
-        {0, 256, 4, 2},
-        {4, 2, 0, 8},
-        {16, 256, 8, 64},
-        {2, 4, 0, 8}
-    };
-
-    CHECK( maximumOf(g) == 128 );
-    CHECK( maximumOf(g2) == 64 );
-    CHECK( maximumOf(g3) == 256 );
-
-}
+/** Infrastructure minimale de test **/
+#define CHECK(test) if (!(test)) cout << "Test failed in file " << __FILE__ << " line " << __LINE__ << ": " #test << endl
 
 void testplateauVide() {
     Plateau g({
@@ -67,7 +16,6 @@ void testplateauVide() {
     CHECK( plateauVide().grille == g.grille );
 }
 
-
 void testtireDeuxOuQuatre() {
     int a;
 
@@ -77,7 +25,6 @@ void testtireDeuxOuQuatre() {
     }
 
 }
-
 
 void testplateauInitial() {
     Plateau g = plateauInitial();
@@ -221,6 +168,7 @@ void testbouge() {
 
 }
 
+
 void testdeplacements() {
     Plateau g({
         {4, 2, 2, 0},
@@ -278,6 +226,7 @@ void testdeplacements() {
     CHECK(deplacementBas(g).grille == r_bas.grille);
 }
 
+
 void testestTermine() {
     Plateau non({
         {2, 2, 8, 2},
@@ -299,11 +248,8 @@ void testestTermine() {
     CHECK(estTermine( oui ));
 }
 
-void testall() {
-
-    testlen();
-    teststrip();
-    testmaximumOf();
+int main()
+{
     testplateauVide();
     testtireDeuxOuQuatre();
     testplateauInitial();
@@ -314,5 +260,5 @@ void testall() {
     testbouge();
     testdeplacements();
     testestTermine();
-
+    return 0;
 }

@@ -1,6 +1,5 @@
 #include "modele.h"
 #include "utils.h"
-#include "tests.h"
 #include <curses.h>
 
 using namespace std;
@@ -143,8 +142,7 @@ int main() {
 
     v = split(jeu);
     t(v);//printw(jeu.c_str());
-
-    testall();
+    
     do {
 
         c = getch();
