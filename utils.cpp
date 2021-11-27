@@ -34,7 +34,7 @@ vector<int> strip(vector<int> t, int k) {
  * @param t Plateau
  * @return int, La plus grande valeur du Plateau t.
 */
-int maximumOf(Plateau t) {
+int maximumOf(Grille t) {
     int r = 0;
 
     for (auto i: t) {
