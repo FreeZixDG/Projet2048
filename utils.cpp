@@ -1,6 +1,8 @@
 #include "modele.h"
 #include "utils.h"
 
+using namespace std;
+
 /* len
  * @param n int, le nombre.
  * @param base int, la base dans laquelle le nombre va etre convertit. (default = 10)

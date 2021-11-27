@@ -1,12 +1,18 @@
+#include <math.h>
+#include <iostream>
+#include <tuple>
+
 #include "modele.h"
 #include "utils.h"
 
+using namespace std;
 
 
 Plateau plateauVide() {
-    Plateau plateau;
 
+    Plateau plateau;
     return plateau;
+
 }
 
 
@@ -57,6 +63,7 @@ Plateau ajouteTuile(Plateau plateau) {
 Plateau plateauInitial() {
     Plateau plateau;
 
+    plateau = ajouteTuile(plateau);
     plateau = ajouteTuile(plateau);
 
     return plateau;

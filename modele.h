@@ -1,17 +1,7 @@
-#include <stdexcept>
-#include <time.h>
-#include <math.h>
-#include <algorithm>
-#include <iostream>
 #include <string>
-#include <vector>
-#include <tuple>
 #include "Plateau.h"
-using namespace std;
 
 const int GAUCHE = 7, DROITE = 4, HAUT = 8, BAS = 2;
-const int W = 4;
-const int H = 4;
 
 /** génère un Plateau de dimensions 4*4 ne contenant que des 0
  *  @return un Plateau vide
@@ -62,7 +52,7 @@ Plateau deplacement(Plateau plateau, int direction);
 /** affiche un Plateau
  * @param p le Plateau
  **/
-string dessine(Plateau g);
+std::string dessine(Plateau g);
 
 /** permet de savoir si une partie est terminée
  *  @param plateau un Plateau

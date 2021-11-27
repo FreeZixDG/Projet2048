@@ -4,6 +4,8 @@
 #include <curses.h>
 #define CHECK(test) if (!(test)) printw("Test failed in function '%s' line %d : %s\n", __FUNCTION__, __LINE__, #test)
 
+using namespace std;
+
 
 void testlen() {
     int a = 45641;
@@ -90,8 +92,8 @@ void testplateauInitial() {
         }
     }
 
-    CHECK(g.grille.size() == H and g.grille[0].size() == W);
-    CHECK(H*W == how_many_zeros + 1);
+    CHECK(g.grille.size() == 4 and g.grille[0].size() == 4);
+    CHECK(how_many_zeros == 14);
 }
 
 void testajouteTuile() {
@@ -111,47 +113,45 @@ void testajouteTuile() {
 }
 
 void testdessine() {
-    if (W == 4 and H == 4) {
 
-        Plateau g;
-        g.grille[0][1] = 2;
-        g.grille[1][0] = 4;
-        
-        string plateau_affiche = dessine(g);
+    Plateau g;
+    g.grille[0][1] = 2;
+    g.grille[1][0] = 4;
+    
+    string plateau_affiche = dessine(g);
 
-        g.grille[3][2] = 16;
+    g.grille[3][2] = 16;
 
-        string plateau_affiche_16 = dessine(g);
+    string plateau_affiche_16 = dessine(g);
 
 
-        string r = (
-            "*****************\n"
-            "*   * 2 *   *   * \n"
-            "*****************\n"
-            "* 4 *   *   *   * \n"
-            "*****************\n"
-            "*   *   *   *   * \n"
-            "*****************\n"
-            "*   *   *   *   * \n"
-            "*****************\n"
-        );
+    string r = (
+        "*****************\n"
+        "*   * 2 *   *   * \n"
+        "*****************\n"
+        "* 4 *   *   *   * \n"
+        "*****************\n"
+        "*   *   *   *   * \n"
+        "*****************\n"
+        "*   *   *   *   * \n"
+        "*****************\n"
+    );
 
-        string r16 = (
-            "*********************\n"
-            "*    * 2  *    *    * \n"
-            "*********************\n"
-            "* 4  *    *    *    * \n"
-            "*********************\n"
-            "*    *    *    *    * \n"
-            "*********************\n"
-            "*    *    * 16 *    * \n"
-            "*********************\n"
-        );
+    string r16 = (
+        "*********************\n"
+        "*    * 2  *    *    * \n"
+        "*********************\n"
+        "* 4  *    *    *    * \n"
+        "*********************\n"
+        "*    *    *    *    * \n"
+        "*********************\n"
+        "*    *    * 16 *    * \n"
+        "*********************\n"
+    );
 
-        CHECK(plateau_affiche == r);
-        CHECK(plateau_affiche_16 == r16);
+    CHECK(plateau_affiche == r);
+    CHECK(plateau_affiche_16 == r16);
 
-    }
 }
 
 void testTranspose() {

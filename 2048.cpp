@@ -3,6 +3,8 @@
 #include "tests.h"
 #include <curses.h>
 
+using namespace std;
+
 
 vector<string> split(const string txt, char ch = ' ')
 {
