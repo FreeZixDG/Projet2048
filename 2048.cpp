@@ -1,7 +1,6 @@
 #include "modele.h"
 #include "utils.h"
 #include <curses.h>
-
 using namespace std;
 
 
