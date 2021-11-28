@@ -3,7 +3,7 @@
 #include <curses.h>
 using namespace std;
 
-int test = 0;
+
 vector<string> split(const string txt, char ch = ' ')
 {
     vector<string> strs;
