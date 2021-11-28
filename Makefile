@@ -1,7 +1,7 @@
 OBJ = 2048.o modele.o utils.o Plateau.o
 CC = g++
 LFLAGS = -lncurses
-INCLUDES = -I "C:/msys64/mingw64/include/ncursesw"
+INCLUDES = -I "D:/cygwin64/usr/include/ncursesw"
 
 program: $(OBJ)
 	$(CC) -o program $(OBJ) $(LFLAGS)
