@@ -48,12 +48,14 @@ Plateau readInfo(string path, int &tries, int &score)
 {
     ifstream fichier;
     fichier.open(path);
-    Plateau g = plateauVide();
+    Plateau plateau = plateauVide();
 
 
 
     fichier >> tries;
     fichier >> score;
+
+    plateau.score = score;
 
     string line; 
 
@@ -62,13 +64,13 @@ Plateau readInfo(string path, int &tries, int &score)
         fichier >> line;
         vector<int> c = extract_numbers(line);
 
-        g.grille[i] = c;
+        plateau.grille[i] = c;
         
     }
 
     fichier.close();
 
-    return g;
+    return plateau;
 }
 
 void writeMove(string path, string name, int tries, char move)
@@ -86,19 +88,40 @@ void writeMove(string path, string name, int tries, char move)
     else
     {
         fichier.open(path, fstream::app);
-
         fichier << tries << ' ' << move << endl;
-
         fichier.close();
     }
-
-    
-
 }
 
-char move()
+char move(Plateau plateau, char prev_move)
 {
-    return 'H';
+    char response;
+    if (prev_move == '\0')
+    {
+        response = 'H';
+        return response;
+    }
+
+    if (prev_move == 'H')
+    {
+        response = 'D';
+    }
+    else if (prev_move == 'D')
+    {
+        response = 'B';
+    }
+    else if (prev_move == 'B')
+    {
+        response = 'G';
+    }
+    else
+    {
+        response = 'H';
+    }
+    
+    
+    
+    return response;
 }
 
 
@@ -106,6 +129,7 @@ char move()
 int main()
 {
     int actual_try = 0;
+    char prev_move = '\0';
     int tries;
     int score;
     Plateau plateau;
@@ -122,12 +146,15 @@ int main()
 
         if (tries == actual_try)
         {
-            char rep = move();
+            cout << endl;
+            char rep = move(plateau, prev_move);
+            prev_move = rep;
             writeMove("mouvements.txt", "BOB", tries, rep);
             cout << "updated!" << endl;
             cout << "Wrote movement " << rep << endl;
             actual_try++;
         }
+
 
         cout << tries << " " << score << endl;
         cout << dessine(plateau);

@@ -351,9 +351,11 @@ Plateau deplacement(Plateau plateau, int direction)
         cerr << "Deplacement non-autorise!" << endl;
         exit(-1);
     }
+
     if (old_plateau.grille != plateau.grille) {
         plateau = ajouteTuile(plateau);
     }
+    
     return plateau;
 }
 
