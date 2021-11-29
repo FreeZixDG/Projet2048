@@ -94,7 +94,8 @@ void writeMove(string path, string name, int tries, char move)
 
 }
 
-int main() {
+int main()
+{
     int actual_try = 0;
     int tries;
     int score;

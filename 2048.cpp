@@ -95,124 +95,8 @@ void affiche_en_couleur(vector<string> s)
 }
 
 
-/*void affiche_en_couleur(vector<string> s)
+int main()
 {
-    for (auto i: s)
-    {
-
-        int v = stoi(i);
-
-        switch (v)
-        {
-        case 2:
-            attron(COLOR_PAIR(1));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(1));
-            break;
-
-        case 4:
-            attron(COLOR_PAIR(2));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(2));
-            break;
-        
-        case 8:
-            attron(COLOR_PAIR(3));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(3));
-            break;
-        
-        case 16:
-            attron(COLOR_PAIR(4));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(4));
-            break;
-        
-        case 32:
-            attron(COLOR_PAIR(5));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(5));
-            break;
-        
-        case 64:
-            attron(COLOR_PAIR(6));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(6));
-            break;
-        
-        case 128:
-            attron(COLOR_PAIR(1));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(1));
-            break;
-        
-        case 256:
-            attron(COLOR_PAIR(2));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(2));
-            break;
-        
-        case 512:
-            attron(COLOR_PAIR(3));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(3));
-            break;
-        
-        case 1024:
-            attron(COLOR_PAIR(4));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(4));
-            break;
-        
-        case 2048:
-            attron(COLOR_PAIR(5));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(5));
-            break;
-        
-        case 4096:
-            attron(COLOR_PAIR(6));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(6));
-            break;
-        
-        case 8192:
-            attron(COLOR_PAIR(1));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(1));
-            break;
-        
-        case 16384:
-            attron(COLOR_PAIR(2));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(2));
-            break;
-        
-        case 32768:
-            attron(COLOR_PAIR(3));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(3));
-            break;
-        
-        case 65536:
-            attron(COLOR_PAIR(4));
-            addstr(i.c_str());
-            attroff(COLOR_PAIR(4));
-            break;
-        
-        default:
-            break;
-        }
-        
-        addch(' ');
-    }
-
-}*/
-
-
-
-
-int main() {
     srand(time(NULL));
 
     initscr();
@@ -249,7 +133,8 @@ int main() {
     v = split(jeu);
     affiche_en_couleur(v);//printw(jeu.c_str());
     
-    do {
+    do
+    {
 
         c = getch();
         old_grille = grille;
@@ -276,10 +161,12 @@ int main() {
                 break;
             }
 
-        if (old_grille.grille != grille.grille) {
+        if (old_grille.grille != grille.grille)
+        {
             tries++;
 
-            if (estTermine(grille)) {
+            if (estTermine(grille))
+            {
                 break;
             }
 
@@ -289,7 +176,8 @@ int main() {
             affiche_en_couleur(v);
             printw("Score: %d\n", grille.score);
             
-            if (estGagnant(grille)) {
+            if (estGagnant(grille))
+            {
                 printw("Wow! Tu as obtenu un 2048! (essaie d'aller encore plus loin... :p)");
             }
         }
@@ -304,19 +192,11 @@ int main() {
     printw("Votre score est de: %d\n", grille.score);
 
     printw("Appuyer sur 'echap' pour quitter");
-    do{c = getch();} while(c != 27);
+    do
+    {
+        c = getch();
+    } while(c != 27);
 
     endwin();
     return 0;
 }
-
-/*int main()
-{
-
-    Plateau g = plateauInitial();
-
-    cout << dessine(g);
-
-
-    return 0;
-}*/

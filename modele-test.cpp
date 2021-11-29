@@ -5,7 +5,8 @@ using namespace std;
 /** Infrastructure minimale de test **/
 #define CHECK(test) if (!(test)) cout << "Test failed in file " << __FILE__ << " line " << __LINE__ << ": " #test << endl
 
-void testplateauVide() {
+void testplateauVide()
+{
     Plateau g({
         {0, 0, 0, 0},
         {0, 0, 0, 0},
@@ -16,24 +17,30 @@ void testplateauVide() {
     CHECK( plateauVide().grille == g.grille );
 }
 
-void testtireDeuxOuQuatre() {
+void testtireDeuxOuQuatre()
+{
     int a;
 
-    for ( int i = 0; i < 1000; i++ ) {
+    for ( int i = 0; i < 1000; i++ )
+    {
         a = tireDeuxOuQuatre();
         CHECK( a == 2 or a == 4 );
     }
 
 }
 
-void testplateauInitial() {
+void testplateauInitial()
+{
     Plateau g = plateauInitial();
 
     int how_many_zeros = 0;
 
-    for (auto i: g.grille) {
-        for (auto j: i) {
-            if(j == 0){
+    for (auto i: g.grille)
+    {
+        for (auto j: i)
+        {
+            if(j == 0)
+            {
                 how_many_zeros++;
             }
         }
@@ -43,7 +50,8 @@ void testplateauInitial() {
     CHECK(how_many_zeros == 14);
 }
 
-void testajouteTuile() {
+void testajouteTuile()
+{
     Plateau r({
         {4, 8, 0, 2},
         {4, 2, 2, 8},
@@ -59,7 +67,8 @@ void testajouteTuile() {
     );
 }
 
-void testdessine() {
+void testdessine()
+{
 
     Plateau g;
     g.grille[0][1] = 2;
@@ -101,7 +110,8 @@ void testdessine() {
 
 }
 
-void testTranspose() {
+void testTranspose()
+{
     Plateau g({
         {4, 2, 2, 0},
         {4, 2, 8, 16},
@@ -118,7 +128,8 @@ void testTranspose() {
     CHECK(Transpose(g).grille == r.grille);
 }
 
-void testCombine() {
+void testCombine()
+{
     Plateau g({
         {4, 2, 2, 0},
         {4, 0, 8, 8},
@@ -137,7 +148,8 @@ void testCombine() {
 
 }
 
-void testbouge() {
+void testbouge()
+{
 
     Plateau g({
         {4, 2, 2, 0},
@@ -169,7 +181,8 @@ void testbouge() {
 }
 
 
-void testdeplacements() {
+void testdeplacements()
+{
     Plateau g({
         {4, 2, 2, 0},
         {4, 0, 2, 8},
@@ -227,7 +240,8 @@ void testdeplacements() {
 }
 
 
-void testestTermine() {
+void testestTermine()
+{
     Plateau non({
         {2, 2, 8, 2},
         {4, 8, 16, 4},
