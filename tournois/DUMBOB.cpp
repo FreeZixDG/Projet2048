@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <thread>
+#include <chrono>
 #include "../modele.h"
-
 using namespace std;
 
 vector<int> extract_numbers(string s)
@@ -78,6 +79,7 @@ void writeMove(string path, string name, int tries, char move)
     {
         fichier.open(path);
         fichier << name << endl;
+        fichier << tries << ' ' << move << endl;
         fichier.close();
         return;
     }
@@ -94,22 +96,42 @@ void writeMove(string path, string name, int tries, char move)
 
 }
 
+char move()
+{
+    return 'H';
+}
+
+
+
 int main()
 {
     int actual_try = 0;
     int tries;
     int score;
-    Plateau plateau = readInfo("configuration.txt", tries, score);
+    Plateau plateau;
 
-    if (tries == actual_try)
+    while (1)
     {
-        writeMove("mouvement.txt", "BOB", tries, 'H');
-        actual_try++;
-    }
+        do
+        {
+            printf("\rWaiting for game update n°%d", actual_try);
+            fflush(stdout);
+            this_thread::sleep_for(chrono::milliseconds(100));
+            plateau = readInfo("configuration.txt", tries, score);
+        } while(tries != actual_try);
 
-    cout << tries << endl;
-    cout << score << endl;
-    cout << dessine(plateau);
+        if (tries == actual_try)
+        {
+            char rep = move();
+            writeMove("mouvements.txt", "BOB", tries, rep);
+            cout << "updated!" << endl;
+            cout << "Wrote movement " << rep << endl;
+            actual_try++;
+        }
+
+        cout << tries << " " << score << endl;
+        cout << dessine(plateau);
+    }
 
     return 0;
 }

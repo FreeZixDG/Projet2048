@@ -1,4 +1,4 @@
-OBJ = DUMBOB.o ../modele.o ../utils.o ../Plateau.o
+OBJ = DUMBOB.o modele.o utils.o Plateau.o
 CC = g++
 INCLUDES = -I "../*.h"
 
@@ -6,16 +6,13 @@ program: $(OBJ)
 	$(CC) -o program $(OBJ)
 
 DUMBOB.o: DUMBOB.cpp
-	$(CC) -c DUMBOB.cpp $(INCLUDES)
+	$(CC) -c DUMBOB.cpp
 
-../modele.o: ../modele.cpp ../modele.h
-	$(CC) -c ../modele.cpp $(INCLUDES)
-	mv modele.o ../
+modele.o: ../modele.cpp ../modele.h
+	$(CC) -c ../modele.cpp
 
-../utils.o: ../utils.cpp ../utils.h
-	$(CC) -c ../utils.cpp $(INCLUDES)
-	mv utils.o ../
+utils.o: ../utils.cpp ../utils.h
+	$(CC) -c ../utils.cpp
 
-../Plateau.o: ../Plateau.cpp ../Plateau.h
-	$(CC) -c ../Plateau.cpp $(INCLUDES)
-	mv Plateau.o ../
+Plateau.o: ../Plateau.cpp ../Plateau.h
+	$(CC) -c ../Plateau.cpp
