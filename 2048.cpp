@@ -5,103 +5,209 @@
 using namespace std;
 
 
-vector<string> split(const string txt, char ch = ' ')
+void affiche_en_couleur(vector<string> s)
 {
-    vector<string> strs;
-    size_t pos = txt.find( ch );
-    size_t initialPos = 0;
-    strs.clear();
-
-    // Decompose statement
-    while( pos != string::npos ) {
-        strs.push_back( txt.substr( initialPos, pos - initialPos ) );
-        initialPos = pos + 1;
-
-        pos = txt.find( ch, initialPos );
-    }
-
-    // Add the last one
-    strs.push_back( txt.substr( initialPos, min( pos, txt.size() ) - initialPos + 1 ) );
-
-    return strs;
-}
-
-
-void t(vector<string> s) {
-    for (auto i: s) {
-        if (i == "2") {
+    for (auto i: s)
+    {
+        if (i == "2")
+        {
             attron(COLOR_PAIR(1));
             addstr(i.c_str());
             attroff(COLOR_PAIR(1));
         }
 
-        else if (i == "4") {
+        else if (i == "4")
+        {
             attron(COLOR_PAIR(2));
             addstr(i.c_str());
             attroff(COLOR_PAIR(2));
         }
         
-        else if (i == "8") {
+        else if (i == "8")
+        {
             attron(COLOR_PAIR(3));
             addstr(i.c_str());
             attroff(COLOR_PAIR(3));
         }
 
-        else if (i == "16") {
+        else if (i == "16")
+        {
             attron(COLOR_PAIR(4));
             addstr(i.c_str());
             attroff(COLOR_PAIR(4));
         }
 
-        else if (i == "32") {
+        else if (i == "32")
+        {
             attron(COLOR_PAIR(5));
             addstr(i.c_str());
             attroff(COLOR_PAIR(5));
         }
 
-        else if (i == "64") {
+        else if (i == "64")
+        {
             attron(COLOR_PAIR(6));
             addstr(i.c_str());
             attroff(COLOR_PAIR(6));
         }
 
-        else if (i == "128") {
+        else if (i == "128")
+        {
             attron(COLOR_PAIR(1));
             addstr(i.c_str());
             attroff(COLOR_PAIR(1));
         }
 
-        else if (i == "256") {
+        else if (i == "256")
+        {
             attron(COLOR_PAIR(2));
             addstr(i.c_str());
             attroff(COLOR_PAIR(2));
         }
 
-        else if (i == "512") {
+        else if (i == "512")
+        {
             attron(COLOR_PAIR(3));
             addstr(i.c_str());
             attroff(COLOR_PAIR(3));
         }
 
-        else if (i == "1024") {
+        else if (i == "1024")
+        {
             attron(COLOR_PAIR(4));
             addstr(i.c_str());
             attroff(COLOR_PAIR(4));
         }
 
-        else if (i == "2048") {
+        else if (i == "2048")
+        {
             attron(COLOR_PAIR(5));
             addstr(i.c_str());
             attroff(COLOR_PAIR(5));
         }
         
-        else {
+        else
+        {
             addstr(i.c_str());
         }
         addch(' ');
     }
 }
 
+
+/*void affiche_en_couleur(vector<string> s)
+{
+    for (auto i: s)
+    {
+
+        int v = stoi(i);
+
+        switch (v)
+        {
+        case 2:
+            attron(COLOR_PAIR(1));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(1));
+            break;
+
+        case 4:
+            attron(COLOR_PAIR(2));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(2));
+            break;
+        
+        case 8:
+            attron(COLOR_PAIR(3));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(3));
+            break;
+        
+        case 16:
+            attron(COLOR_PAIR(4));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(4));
+            break;
+        
+        case 32:
+            attron(COLOR_PAIR(5));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(5));
+            break;
+        
+        case 64:
+            attron(COLOR_PAIR(6));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(6));
+            break;
+        
+        case 128:
+            attron(COLOR_PAIR(1));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(1));
+            break;
+        
+        case 256:
+            attron(COLOR_PAIR(2));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(2));
+            break;
+        
+        case 512:
+            attron(COLOR_PAIR(3));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(3));
+            break;
+        
+        case 1024:
+            attron(COLOR_PAIR(4));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(4));
+            break;
+        
+        case 2048:
+            attron(COLOR_PAIR(5));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(5));
+            break;
+        
+        case 4096:
+            attron(COLOR_PAIR(6));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(6));
+            break;
+        
+        case 8192:
+            attron(COLOR_PAIR(1));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(1));
+            break;
+        
+        case 16384:
+            attron(COLOR_PAIR(2));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(2));
+            break;
+        
+        case 32768:
+            attron(COLOR_PAIR(3));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(3));
+            break;
+        
+        case 65536:
+            attron(COLOR_PAIR(4));
+            addstr(i.c_str());
+            attroff(COLOR_PAIR(4));
+            break;
+        
+        default:
+            break;
+        }
+        
+        addch(' ');
+    }
+
+}*/
 
 
 
@@ -141,7 +247,7 @@ int main() {
     attron(COLOR_PAIR(0));
 
     v = split(jeu);
-    t(v);//printw(jeu.c_str());
+    affiche_en_couleur(v);//printw(jeu.c_str());
     
     do {
 
@@ -180,7 +286,7 @@ int main() {
             clear();
             jeu = dessine(grille);
             v = split(jeu);
-            t(v);
+            affiche_en_couleur(v);
             printw("Score: %d\n", grille.score);
             
             if (estGagnant(grille)) {
@@ -193,7 +299,7 @@ int main() {
     clear();
     jeu = dessine(grille);
     v = split(jeu);
-    t(v);//printw(dessine(grille).c_str());
+    affiche_en_couleur(v);//printw(dessine(grille).c_str());
     printw("Jeu termine!\n");
     printw("Votre score est de: %d\n", grille.score);
 

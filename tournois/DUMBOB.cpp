@@ -3,6 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include "../modele.h"
+
 using namespace std;
 
 vector<int> extract_numbers(string s)
