@@ -1,7 +1,7 @@
 #include <string>
 #include "Plateau.h"
 
-const int GAUCHE = 7, DROITE = 4, HAUT = 8, BAS = 2;
+const int GAUCHE = 1, DROITE = 2, HAUT = 3, BAS = 4;
 
 /** génère un Plateau de dimensions 4*4 ne contenant que des 0
  *  @return un Plateau vide

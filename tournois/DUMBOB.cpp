@@ -150,80 +150,72 @@ char strat_priority(Plateau plateau)
 /*choose_random_move
  * @return char, H B G ou D a proba égale (1/4)
 */
-char choose_random_move()
+int choose_random_move()
 {
-    int v = rand() % 4;
-
-    switch (v)
-    {
-    case 0:
-        return 'G';
-    
-    case 1:
-        return 'D';
-    
-    case 2:
-        return 'H';
-    
-    case 3:
-        return 'B';
-    
-    default:
-        return -1;
-    }
-
+    return rand() % 4 + 1;
 }
 
-int convertDirection(char v)
+char convertDirection(int v)
 {
     switch (v)
     {
-        case 'G': return GAUCHE;
-        case 'D': return DROITE;
-        case 'H': return HAUT;
-        case 'B': return BAS;
+        case GAUCHE: return 'G';
+        case DROITE: return 'D';
+        case HAUT: return 'H';
+        case BAS: return 'B';
         default: return -1;
     }
 }
 
+/* plays a games staring with the first_direction move, and plays randomly until it loses
+ * @param plateau Plateau, the starting plateau
+ * @param first_direction int, the first direction
+ * @return the end score
+*/
+int play_game(Plateau plateau, int first_direction)
+{
+
+
+    int direction = first_direction;
+    do
+    {
+        plateau = deplacement(plateau, direction);
+        direction = choose_random_move();
+    } while (!estTermine(plateau));
+
+    return plateau.score;
+}
+
+
 char strat_brute(Plateau plateau)
 {
-    vector<tuple<char, int>> vec;
-    Plateau temp = plateau;
-    char first_direction_c;
-    char direction_c;
-    int direction;
+    int moyenne_G = 0;
+    int moyenne_D = 0;
+    int moyenne_H = 0;
+    int moyenne_B = 0;
+    int games = 100;
 
-    for (int k = 0; k < 1000; k++)
+    /*test if the position is valid*/
+    if (deplacement(plateau, GAUCHE).grille == plateau.grille) moyenne_G = -1;
+    if (deplacement(plateau, DROITE).grille == plateau.grille) moyenne_D = -1;
+    if (deplacement(plateau, HAUT).grille == plateau.grille) moyenne_H = -1;
+    if (deplacement(plateau, BAS).grille == plateau.grille) moyenne_B = -1;
+
+    for (int k = 0; k < games / 4; k++)
     {
-        first_direction_c = choose_random_move();
-        direction_c = first_direction_c;
-        int compteur = 10;
+        if (moyenne_G != -1) moyenne_G += play_game(plateau, GAUCHE);
+        if (moyenne_D != -1) moyenne_D += play_game(plateau, DROITE);
+        if (moyenne_H != -1) moyenne_H += play_game(plateau, HAUT);
+        if (moyenne_B != -1) moyenne_B += play_game(plateau, BAS);
+    } 
 
-        do
-        {
-            direction = convertDirection(direction_c);
-            temp = deplacement(temp, direction);
-            direction_c = choose_random_move();
-            compteur--;
-        } while (!estTermine(temp) and compteur > 0);
+    int max_score = max(max(moyenne_G, moyenne_D), max(moyenne_H, moyenne_G));
 
-        vec.push_back(make_tuple(first_direction_c, temp.score));
-        temp = plateau;
-    }
-
-    // je prend le move qui est associé au plus grand score
-    char move;
-    for (auto i: vec)
-    {
-        int max_score = 0;
-        if (get<1>(i) > max_score)
-        {
-            move = get<0>(i);
-        }
-    }
-
-    return move;
+    if (max_score == moyenne_G) return 'G';
+    if (max_score == moyenne_D) return 'D';
+    if (max_score == moyenne_H) return 'H';
+    if (max_score == moyenne_B) return 'B';
+    else return -1;
 }
 
 
@@ -273,3 +265,17 @@ int main()
 
     return 0;
 }
+
+
+/*int main()
+{
+    srand(time(NULL));
+    
+
+    Plateau plateau = plateauInitial();
+
+
+    cout << strat_brute(plateau);
+
+    return 0;
+}*/
