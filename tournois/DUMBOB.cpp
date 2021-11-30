@@ -93,7 +93,7 @@ void writeMove(string path, string name, int tries, char move)
     }
 }
 
-char move(Plateau plateau, char prev_move)
+char Strat_HDBG(Plateau plateau, char prev_move)
 {
     char response;
     if (prev_move == '\0')
@@ -118,8 +118,29 @@ char move(Plateau plateau, char prev_move)
     {
         response = 'H';
     }
-    
-    
+    return response;
+}
+
+char priority_strat(Plateau plateau)
+{
+    char response;
+
+    if (deplacementHaut(plateau).grille != plateau.grille)
+    {
+        response = 'H';
+    }
+    else if (deplacementGauche(plateau).grille != plateau.grille)
+    {  
+        response = 'G';
+    }
+    else if (deplacementDroite(plateau).grille == plateau.grille)
+    {
+        response = 'D';
+    }
+    else
+    {
+        response = 'B';
+    }
     
     return response;
 }
@@ -147,7 +168,7 @@ int main()
         if (tries == actual_try)
         {
             cout << endl;
-            char rep = move(plateau, prev_move);
+            char rep = Strat_HDBG(plateau, prev_move);
             prev_move = rep;
             writeMove("mouvements.txt", "BOB", tries, rep);
             cout << "updated!" << endl;
