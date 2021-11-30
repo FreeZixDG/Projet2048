@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <thread>
 #include <chrono>
+#include <tuple>
 #include "../modele.h"
+#include "../utils.h"
 using namespace std;
 
 vector<int> extract_numbers(string s)
@@ -93,7 +95,7 @@ void writeMove(string path, string name, int tries, char move)
     }
 }
 
-char Strat_HDBG(Plateau plateau, char prev_move)
+char strat_HBDG(Plateau plateau, char prev_move)
 {
     char response;
     if (prev_move == '\0')
@@ -121,7 +123,7 @@ char Strat_HDBG(Plateau plateau, char prev_move)
     return response;
 }
 
-char priority_strat(Plateau plateau)
+char strat_priority(Plateau plateau)
 {
     char response;
 
@@ -133,7 +135,7 @@ char priority_strat(Plateau plateau)
     {  
         response = 'G';
     }
-    else if (deplacementDroite(plateau).grille == plateau.grille)
+    else if (deplacementDroite(plateau).grille != plateau.grille)
     {
         response = 'D';
     }
@@ -145,15 +147,96 @@ char priority_strat(Plateau plateau)
     return response;
 }
 
+/*choose_random_move
+ * @return char, H B G ou D a proba égale (1/4)
+*/
+char choose_random_move()
+{
+    int v = rand() % 4;
+
+    switch (v)
+    {
+    case 0:
+        return 'G';
+    
+    case 1:
+        return 'D';
+    
+    case 2:
+        return 'H';
+    
+    case 3:
+        return 'B';
+    
+    default:
+        return -1;
+    }
+
+}
+
+int convertDirection(char v)
+{
+    switch (v)
+    {
+        case 'G': return GAUCHE;
+        case 'D': return DROITE;
+        case 'H': return HAUT;
+        case 'B': return BAS;
+        default: return -1;
+    }
+}
+
+char strat_brute(Plateau plateau)
+{
+    vector<tuple<char, int>> vec;
+    Plateau temp = plateau;
+    char first_direction_c;
+    char direction_c;
+    int direction;
+
+    for (int k = 0; k < 1000; k++)
+    {
+        first_direction_c = choose_random_move();
+        direction_c = first_direction_c;
+        int compteur = 10;
+
+        do
+        {
+            direction = convertDirection(direction_c);
+            temp = deplacement(temp, direction);
+            direction_c = choose_random_move();
+            compteur--;
+        } while (!estTermine(temp) and compteur > 0);
+
+        vec.push_back(make_tuple(first_direction_c, temp.score));
+        temp = plateau;
+    }
+
+    // je prend le move qui est associé au plus grand score
+    char move;
+    for (auto i: vec)
+    {
+        int max_score = 0;
+        if (get<1>(i) > max_score)
+        {
+            move = get<0>(i);
+        }
+    }
+
+    return move;
+}
+
 
 
 int main()
 {
+    srand(time(NULL));
     int actual_try = 0;
     char prev_move = '\0';
     int tries;
     int score;
     Plateau plateau;
+    
 
     while (1)
     {
@@ -163,22 +246,29 @@ int main()
             fflush(stdout);
             this_thread::sleep_for(chrono::milliseconds(100));
             plateau = readInfo("configuration.txt", tries, score);
-        } while(tries != actual_try);
+        }
+        while(tries != actual_try);
+
+        if (estTermine(plateau))
+        {
+            printf("\nGame over.\n");
+            break;
+        }
 
         if (tries == actual_try)
         {
-            cout << endl;
-            char rep = Strat_HDBG(plateau, prev_move);
+            printf("\n");
+            char rep = strat_brute(plateau);
             prev_move = rep;
             writeMove("mouvements.txt", "BOB", tries, rep);
-            cout << "updated!" << endl;
-            cout << "Wrote movement " << rep << endl;
+            printf("updated!\n");
+            printf("Wrote movement %c\n", rep);
             actual_try++;
         }
 
 
-        cout << tries << " " << score << endl;
-        cout << dessine(plateau);
+        printf("try: %d\nscore: %d\n", tries, score);
+        printf("%s", dessine(plateau).c_str());
     }
 
     return 0;
