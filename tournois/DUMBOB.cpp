@@ -175,13 +175,14 @@ char convertDirection(int v)
 int play_game(Plateau plateau, int first_direction)
 {
 
-
     int direction = first_direction;
+    int moves = 20;
     do
     {
         plateau = deplacement(plateau, direction);
         direction = choose_random_move();
-    } while (!estTermine(plateau));
+        moves--;
+    } while (moves != 0);
 
     return plateau.score;
 }
@@ -209,7 +210,7 @@ char strat_brute(Plateau plateau)
         if (moyenne_B != -1) moyenne_B += play_game(plateau, BAS);
     } 
 
-    int max_score = max(max(moyenne_G, moyenne_D), max(moyenne_H, moyenne_G));
+    int max_score = max(max(moyenne_G, moyenne_D), max(moyenne_H, moyenne_B));
 
     if (max_score == moyenne_G) return 'G';
     if (max_score == moyenne_D) return 'D';
@@ -225,6 +226,7 @@ int main()
     srand(time(NULL));
     int actual_try = 0;
     char prev_move = '\0';
+    char rep;
     int tries;
     int score;
     Plateau plateau;
@@ -250,8 +252,8 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            char rep = strat_brute(plateau);
-            prev_move = rep;
+            /*if (tries < 100) rep = strat_priority(plateau);
+            else */rep = strat_brute(plateau);
             writeMove("mouvements.txt", "BOB", tries, rep);
             printf("updated!\n");
             printf("Wrote movement %c\n", rep);
