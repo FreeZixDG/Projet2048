@@ -9,6 +9,8 @@
 #include "../utils.h"
 using namespace std;
 
+// actual best: 27408 pts
+
 vector<int> extract_numbers(string s)
 {
     vector<char> t;
@@ -29,7 +31,8 @@ vector<int> extract_numbers(string s)
         if (isdigit(i))
         {
             r += i;
-        } else
+        }
+        else if (r != "") // ligne permettant de corriger un bug dans le fichier tournoi-simulation
         {
             a.push_back(r);
             r = "";
@@ -194,7 +197,7 @@ char strat_brute(Plateau plateau)
     int moyenne_D = 0;
     int moyenne_H = 0;
     int moyenne_B = 0;
-    int games = 100;
+    int games = 1000;
 
     /*test if the position is valid*/
     if (deplacement(plateau, GAUCHE).grille == plateau.grille) moyenne_G = -1;
@@ -224,7 +227,7 @@ char strat_brute(Plateau plateau)
 int main()
 {
     srand(time(NULL));
-    int actual_try = 0;
+    int actual_try = 797;
     char prev_move = '\0';
     char rep;
     int tries;
@@ -252,8 +255,7 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            /*if (tries < 100) rep = strat_priority(plateau);
-            else */rep = strat_brute(plateau);
+            rep = strat_brute(plateau);
             writeMove("mouvements.txt", "BOB", tries, rep);
             printf("updated!\n");
             printf("Wrote movement %c\n", rep);
