@@ -15,6 +15,7 @@ using namespace std;
 
 vector<int> extract_numbers(string s)
 {
+    //printf("\nstring is: %s\n", s.c_str());
     vector<char> t;
     vector<string> a;
     vector<int> result;
@@ -51,15 +52,18 @@ vector<int> extract_numbers(string s)
     return result;
 }
 
-Plateau readInfo(string path, int &tries, int &score)
+Plateau readInfo(string path, int &tries, int &score, int match)
 {
     ifstream fichier;
     fichier.open(path);
-    Plateau plateau = plateauVide();
+    Plateau plateau;
 
 
 
     fichier >> tries;
+
+    if (tries != match) return Plateau({{},{},{},{}});
+
     fichier >> score;
 
     plateau.score = score;
@@ -238,15 +242,18 @@ int main()
     while (1)
     {
         
+        system("clear");
+        printf("Plateau n°%d:\n%s", actual_try, dessine(plateau).c_str());
+        
         do
         {
             printf("\rWaiting for game update n°%d", actual_try);
             fflush(stdout);
-            this_thread::sleep_for(chrono::milliseconds(2));
-            plateau = readInfo("configuration.txt", tries, score);
+            this_thread::sleep_for(chrono::milliseconds(50));
+            plateau = readInfo("configuration.txt", tries, score, actual_try);
         }
-        while(tries != actual_try);
-
+        while( tries != actual_try or plateau.grille == Grille{{},{},{},{}} ); //plateau.grille != Grille({{},{},{},{}}) est au cas ou le fichier n'a pas pu lire
+        
         if (estTermine(plateau))
         {
             printf("\nGame over.\n");
@@ -257,10 +264,11 @@ int main()
         {
             printf("\n");
             if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
-            else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 10);
-            else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 20);
-            else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 30);
+            else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 20);
+            else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 30);
+            else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 40);
             else rep = strat_brute(plateau, 2000, 50);
+            
             
             writeMove("mouvements.txt", "BOB", tries, rep);
             printf("updated!\n");
@@ -270,8 +278,6 @@ int main()
 
 
         printf("try: %d\nscore: %d\n", tries, score);
-        system("clear");
-        printf("%s", dessine(plateau).c_str());
     }
 
     return 0;

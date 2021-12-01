@@ -9,4 +9,5 @@ class Plateau
         Plateau(Grille g, int s = 0);
         Grille grille;
         int score;
+        int TAILLE;
 };

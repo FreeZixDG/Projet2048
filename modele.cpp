@@ -137,31 +137,29 @@ string dessine(Plateau g)
 
 Plateau Transpose(Plateau t)
 {
-    Grille result(t.grille[0].size(), vector<int>(t.grille.size()));
+    Plateau result( Grille(t.grille[0].size(), vector<int>(t.grille.size())), t.score );
 
 
     for (int i = 0; i < t.grille.size(); i++)
     {
         for (int j = 0; j < t.grille[0].size(); j++)
         {
-            result[j][i] = t.grille[i][j];
+            result.grille[j][i] = t.grille[i][j];
         }
     }
-
-    t.grille = result;
     
-    return t;
+    return result;
 }
 
 Plateau deplacementGauche(Plateau plateau)
 {
     int size;
-    int taille = 4;
+    int taille = plateau.TAILLE;
     // Pour chaque ligne
     for (auto &i: plateau.grille)
     {
         // on enleve les 0
-        i = strip(i, 0);
+        i.erase(remove(i.begin(), i.end(), 0), i.end());
 
         // on combine si possible
         size = i.size();
@@ -169,14 +167,14 @@ Plateau deplacementGauche(Plateau plateau)
         {
             if (i[elem] == i[elem + 1])
             {
-                i[elem] = 2 * i[elem];
+                i[elem] *= 2;
                 plateau.score += i[elem];
                 i[elem + 1] = 0;
             }
         }
 
         // on re enleve les 0 (car en combinant on a laissé des "trou")
-        i = strip(i, 0);
+        i.erase(remove(i.begin(), i.end(), 0), i.end());
 
         size = i.size();
 
@@ -194,26 +192,28 @@ Plateau deplacementGauche(Plateau plateau)
 Plateau deplacementDroite(Plateau plateau)
 {
     int size;
-    int taille = 4;
+    int taille = plateau.TAILLE;
     // Pour chaque ligne
     for (auto &i: plateau.grille)
     {
         // on enleve les 0
-        i = strip(i, 0);
+        i.erase(remove(i.begin(), i.end(), 0), i.end());
+
+        size = i.size();
 
         // on combine si possible
-        for (int elem = i.size() - 1; elem > 0; elem--)
+        for (int elem = size - 1; elem > 0; elem--)
         {
             if (i[elem] == i[elem - 1])
             {
-                i[elem] = 2 * i[elem];
+                i[elem] *= 2;
                 plateau.score += i[elem];
                 i[elem - 1] = 0;
             }
         }
 
         // on re enleve les 0 (car en combinant on a laissé des "trou")
-        i = strip(i, 0);
+        i.erase(remove(i.begin(), i.end(), 0), i.end());
 
         size = i.size();
 
