@@ -13,10 +13,10 @@ int len(int n, int base = 10);
 
 /* strip
  * @param t tableau d'entier
- * @param k int, la valeur qu on veut enlever de t. (default = 0)
+ * @param k int, la valeur qu on veut enlever de t.
  * @return le tableau t auquel on a enlever tous les element valant k.
 */
-std::vector<int> strip(std::vector<int> t, int k = 0);
+std::vector<int> strip(std::vector<int> t, int k);
 
 /* Renvoie la plus grande valeur d'une grille
  * @param t Grille

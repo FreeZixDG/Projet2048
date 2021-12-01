@@ -128,58 +128,6 @@ void testTranspose()
     CHECK(Transpose(g).grille == r.grille);
 }
 
-void testCombine()
-{
-    Plateau g({
-        {4, 2, 2, 0},
-        {4, 0, 8, 8},
-        {2, 0, 2, 0},
-        {4, 8, 0, 0},
-    });
-
-    Plateau r({
-        {4, 4, 0, 0},
-        {4, 0, 16, 0},
-        {2, 0, 2, 0},
-        {4, 8, 0, 0},
-    });
-
-    CHECK(Combine_gauche(g).grille == r.grille);
-
-}
-
-void testbouge()
-{
-
-    Plateau g({
-        {4, 2, 2, 0},
-        {4, 0, 2, 8},
-        {2, 0, 2, 0},
-        {4, 8, 2, 4},
-        {0, 0, 0, 0},
-    });
-
-    Plateau r_gauche({
-        {4, 2, 2, 0},
-        {4, 2, 8, 0},
-        {2, 2, 0, 0},
-        {4, 8, 2, 4},
-        {0, 0, 0, 0}
-    });
-
-    Plateau r_droite({
-        {0, 4, 2, 2},
-        {0, 4, 2, 8},
-        {0, 0, 2, 2},
-        {4, 8, 2, 4},
-        {0, 0, 0, 0}
-    });
-
-    CHECK(bougeGauche(g).grille == r_gauche.grille);
-    CHECK(bougeDroite(g).grille == r_droite.grille);
-
-}
-
 
 void testdeplacements()
 {
@@ -270,8 +218,6 @@ int main()
     testajouteTuile();
     testdessine();
     testTranspose();
-    testCombine();
-    testbouge();
     testdeplacements();
     testestTermine();
     return 0;

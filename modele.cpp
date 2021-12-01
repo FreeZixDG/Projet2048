@@ -10,10 +10,8 @@ using namespace std;
 
 Plateau plateauVide()
 {
-
     Plateau plateau;
     return plateau;
-
 }
 
 
@@ -155,158 +153,117 @@ Plateau Transpose(Plateau t)
     return t;
 }
 
-
-Plateau Combine_gauche(Plateau plateau)
+Plateau deplacementGauche(Plateau plateau)
 {
-
-    auto combine_line = [&plateau](vector<int> t)
+    int size;
+    int taille = 4;
+    // Pour chaque ligne
+    for (auto &i: plateau.grille)
     {
-        for (int i = 0; i < t.size() - 1; i++)
+        // on enleve les 0
+        i = strip(i, 0);
+
+        // on combine si possible
+        size = i.size();
+        for (int elem = 0; elem < size - 1; elem++)
         {
-            if (t[i] == t[i + 1])
+            if (i[elem] == i[elem + 1])
             {
-                t[i] = 2 * t[i];
-                plateau.score += t[i];
-                t[i + 1] = 0;
+                i[elem] = 2 * i[elem];
+                plateau.score += i[elem];
+                i[elem + 1] = 0;
             }
         }
-        return t;
-    };
 
-    for (int i = 0; i < plateau.grille.size(); i++)
-    {
-        plateau.grille[i] = combine_line(plateau.grille[i]);
-    }
+        // on re enleve les 0 (car en combinant on a laissé des "trou")
+        i = strip(i, 0);
 
-    return plateau;
-}
+        size = i.size();
 
-Plateau Combine_droite(Plateau plateau)
-{
-
-    auto combine_line = [&plateau](vector<int> t)
-    {
-        for (int i = t.size() - 1; i > 0; i--)
-        {
-            if (t[i] == t[i - 1])
-            {
-                t[i] = 2 * t[i];
-                plateau.score += t[i];
-                t[i - 1] = 0;
-            }
-        }
-        return t;
-    };
-
-    for (int i = 0; i < plateau.grille.size(); i++)
-    {
-        plateau.grille[i] = combine_line(plateau.grille[i]);
-    }
-    return plateau;
-}
-
-
-Plateau bougeGauche(Plateau t)
-{
-
-    Grille result = t.grille;
-    
-    for (auto &i : result)
-    {
-        i = strip(i);
-        int number_of_zeros = t.grille[0].size() - i.size();
-
-
-        for (int k = 0; k < number_of_zeros; k++)
+        //on rajoute les 0 au debut
+        for (int k = 0; k < taille - size; k++)
         {
             i.push_back(0);
         }
     }
 
-    t.grille = result;
-    
-    return t;
+    return plateau;
 }
 
 
-Plateau bougeDroite(Plateau t)
+Plateau deplacementDroite(Plateau plateau)
 {
-    
-    Grille result = t.grille;
-    
-    for (auto &i: result)
+    int size;
+    int taille = 4;
+    // Pour chaque ligne
+    for (auto &i: plateau.grille)
     {
-        i = strip(i);
-        int number_of_zeros = t.grille[0].size() - i.size();
+        // on enleve les 0
+        i = strip(i, 0);
 
-        for (int k = 0; k < number_of_zeros; k++)
+        // on combine si possible
+        for (int elem = i.size() - 1; elem > 0; elem--)
+        {
+            if (i[elem] == i[elem - 1])
+            {
+                i[elem] = 2 * i[elem];
+                plateau.score += i[elem];
+                i[elem - 1] = 0;
+            }
+        }
+
+        // on re enleve les 0 (car en combinant on a laissé des "trou")
+        i = strip(i, 0);
+
+        size = i.size();
+
+        //on rajoute les 0 au debut
+        for (int k = 0; k < taille - size; k++)
         {
             i.insert(i.begin(), 0);
         }
     }
 
-    t.grille = result;
-    
-    return t;
+    return plateau;
 }
 
 
-Plateau deplacementGauche(Plateau t)
+Plateau deplacementBas(Plateau plateau)
 {
-    t = bougeGauche(t);
-    t = Combine_gauche(t);
-    t = bougeGauche(t);
-    return t;
+    plateau = Transpose(plateau);
+    plateau = deplacementDroite(plateau);
+    plateau = Transpose(plateau);
+    return plateau;
 }
 
 
-Plateau deplacementDroite(Plateau t)
+Plateau deplacementHaut(Plateau plateau)
 {
-    t = bougeDroite(t);
-    t = Combine_droite(t);
-    t = bougeDroite(t);
-    return t;
-}
-
-
-Plateau deplacementBas(Plateau t)
-{
-    t = Transpose(t);
-    t = deplacementDroite(t);
-    t = Transpose(t);
-    return t;
-}
-
-
-Plateau deplacementHaut(Plateau t)
-{
-    t = Transpose(t);
-    t = deplacementGauche(t);
-    t = Transpose(t);
-    return t;
+    plateau = Transpose(plateau);
+    plateau = deplacementGauche(plateau);
+    plateau = Transpose(plateau);
+    return plateau;
 }
 
 
 bool estTermine(Plateau plateau)
 {
-    bool est_termine = true;
     plateau = deplacementGauche(plateau);
     plateau = deplacementDroite(plateau);
     plateau = deplacementHaut(plateau);
     plateau = deplacementBas(plateau);
 
-    for (auto i: plateau.grille)
+    for (auto &i: plateau.grille)
     {
-        for (auto j: i)
+        for (auto &j: i)
         {
             if (j == 0)
             {
-                est_termine = false;
-                break;
+                return false;
             }
         }
     }
-    return est_termine;
+    return true;;
 }
 
 bool estGagnant(Plateau plateau)

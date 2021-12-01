@@ -80,31 +80,3 @@ Plateau ajouteTuile(Plateau plateau);
  * @return un Plateau ou chaque ligne correspond à chaque colone de t
 */
 Plateau Transpose(Plateau plateau);
-
-/* Combine_gauche
- * @param t Plateau
- * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
- * 
- * Exemple avec un Plateau t = {{2, 2, 8, 4}, {4, 4, 4, 16}} renvoie {{4, 0, 8, 4}, {8, 0, 4, 16}}
-*/
-Plateau Combine_gauche(Plateau t);
-
-/* Combine_droite
- * @param t Plateau
- * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
- * 
- * Exemple avec un Plateau t = {{2, 2, 8, 4}, {4, 4, 4, 16}} renvoie {{0, 4, 8, 4}, {0, 4, 8, 16}}
-*/
-Plateau Combine_droite(Plateau t);
-
-/* bougeGauche
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à gauche.
- */
-Plateau bougeGauche(Plateau t);
-
-/* bougeDroite
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à droite.
- */
-Plateau bougeDroite(Plateau t);
