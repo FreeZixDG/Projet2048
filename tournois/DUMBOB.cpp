@@ -263,11 +263,13 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
+            /*if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
             else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 20);
             else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 30);
             else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 40);
-            else rep = strat_brute(plateau, 2000, 50);
+            else rep = strat_brute(plateau, 2000, 50);*/
+
+            rep = strat_brute(plateau, 2000, 3);
             
             
             writeMove("mouvements.txt", "BOB", tries, rep);
