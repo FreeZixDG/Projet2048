@@ -151,7 +151,7 @@ Plateau Transpose(Plateau t)
     return result;
 }
 
-Plateau deplacementGauche(Plateau plateau)
+/*Plateau deplacementGauche(Plateau plateau)
 {
     int size;
     int taille = plateau.TAILLE;
@@ -186,10 +186,108 @@ Plateau deplacementGauche(Plateau plateau)
     }
 
     return plateau;
+}*/
+
+Plateau deplacementGauche(Plateau plateau)
+{
+    int nb_zeros;
+    int last_elem_checked;
+
+    for (auto &line: plateau.grille)
+    {
+        nb_zeros = 0;
+        last_elem_checked = 0;
+
+        for (int i = 0; i < line.size(); i++) // du 1er jusque l'avant-dernier elem
+        {
+            if (line[i] == 0)
+            {
+                nb_zeros++;
+            }
+
+            else
+            {
+                if (line[i] == last_elem_checked)
+                {
+                    line[i - nb_zeros - 1] *= 2;
+                    plateau.score += line[i - nb_zeros - 1];
+                    last_elem_checked = 0;
+                    line[i] = 0;
+                    nb_zeros++;
+                }
+
+                else
+                {
+                    if (nb_zeros)
+                    {
+                        line[i - nb_zeros] = line[i];
+                        last_elem_checked = line[i];
+                        line[i] = 0;
+                    }
+                    else 
+                    {
+                        last_elem_checked = line[i];
+                    }
+                }
+
+                
+            }
+        }
+    }
+
+    return plateau;
 }
 
-
 Plateau deplacementDroite(Plateau plateau)
+{
+    int nb_zeros;
+    int last_elem_checked;
+
+    for (auto &line: plateau.grille)
+    {
+        nb_zeros = 0;
+        last_elem_checked = 0;
+
+        for (int i = line.size() - 1; i >= 0; i--) // du 1er jusque l'avant-dernier elem
+        {
+            if (line[i] == 0)
+            {
+                nb_zeros++;
+            }
+
+            else
+            {
+                if (line[i] == last_elem_checked)
+                {
+                    line[i + nb_zeros + 1] *= 2;
+                    plateau.score += line[i + nb_zeros + 1];
+                    last_elem_checked = 0;
+                    line[i] = 0;
+                    nb_zeros++;
+                }
+
+                else
+                {
+                    if (nb_zeros)
+                    {
+                        line[i + nb_zeros] = line[i];
+                        last_elem_checked = line[i];
+                        line[i] = 0;
+                    }
+                    else
+                    {
+                        last_elem_checked = line[i];
+                    }
+                }
+                
+            }
+        }
+    }
+
+    return plateau;
+}
+
+/*Plateau deplacementDroite(Plateau plateau)
 {
     int size;
     int taille = plateau.TAILLE;
@@ -225,7 +323,7 @@ Plateau deplacementDroite(Plateau plateau)
     }
 
     return plateau;
-}
+}*/
 
 
 Plateau deplacementBas(Plateau plateau)

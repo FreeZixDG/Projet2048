@@ -151,13 +151,8 @@ int main()
     init_pair(5, COLOR_RED, COLOR_BLACK);
     init_pair(6, COLOR_YELLOW, COLOR_BLACK);
     
-    //Plateau grille = plateauInitial();
-    Plateau grille({
-        {256, 4, 2, 0},
-        {2, 16, 1024, 32},
-        {4, 32, 64, 4},
-        {32, 128, 8, 2}
-    });
+    Plateau grille = plateauInitial();
+
     Plateau old_grille;
     string jeu;
     jeu = dessine(grille);

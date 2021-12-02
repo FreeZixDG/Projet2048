@@ -211,7 +211,6 @@ int choose_random_move(bool g, bool d, bool h, bool b)
 */
 int play_game(Plateau plateau, int first_direction, int moves_ahead)
 {
-
     int direction = first_direction;
     Grille old_grille;
     bool g = 1;
@@ -223,6 +222,7 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
     {
         old_grille = plateau.grille;
         plateau = deplacement(plateau, direction);
+        //au prochain coup, on interdit d'aller dans la direction qui n'est pas valide
         if (old_grille == plateau.grille)
         {
             switch (direction)
@@ -243,15 +243,18 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
                 b = 0;
                 break;
             }
+            moves_ahead++;
         }
-
+        
+        // si tout va bien, on ajoute une tuile, et on autorise toutes les direction au prochain coup
         else
         {
             plateau = ajouteTuile(plateau);
             g = 1;d = 1;h = 1;b = 1;
         }
-
+        // si bloqué, on arrete
         if (!(g or d or h or b)) break;
+
         direction = choose_random_move(g, d, h, b);
         moves_ahead--;
     } while (moves_ahead != 0);
@@ -307,9 +310,9 @@ int count_tiles(Grille grille)
 
 int main()
 {
-    const int MAX = 999;
-    int nb_games = 101;
-    int nb_moves = 20;
+    const int MAX = 999999;
+    int nb_games;
+    int nb_moves;
     srand(time(NULL));
     int actual_try = 0;
     char prev_move = '\0';
@@ -319,6 +322,7 @@ int main()
     Plateau plateau;
     int nb_tiles;
     string mode;
+    int won = 0;
     
 
     while (1)
@@ -336,9 +340,14 @@ int main()
         while( tries != actual_try or plateau.grille == Grille{{},{},{},{}} ); //plateau.grille != Grille({{},{},{},{}}) est au cas ou le fichier n'a pas pu lire
 
         system("clear");
-        if(nb_games == 100) mode = "Easy";
-        else if (nb_games == 1000) mode = "Medium";
-        else if (nb_games == 2000) mode = "Carefull";
+        if (!won)
+        {
+            if (estGagnant(plateau))
+            {
+                won = actual_try;
+            }
+        }
+        if(nb_games == 200) mode = "Easy";
         else if (nb_games == 3000) mode = "Extreme";
         else mode = "Custom";
 
@@ -355,11 +364,12 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            /*nb_tiles = count_tiles(plateau.grille);
-            if (nb_tiles < 5 or plateau.score < 13000) {nb_games = 100;nb_moves = 10;}
-            else if (nb_tiles < 9 or plateau.score < 20000) {nb_games = 1000;}
-            else if (nb_tiles < 11 or plateau.score < 30000) {nb_games = 2000;}
-            else {nb_games = 3000; nb_moves = MAX;}*/
+
+            if (plateau.score >= 32000 and plateau.score <= 42000)
+                {nb_games = 10000; nb_moves = MAX;}
+
+            else
+                {nb_games = 200; nb_moves = 15;}
 
 
             // Calcul du meilleur coup selon BOB
@@ -375,6 +385,15 @@ int main()
 
         printf("score: %d\n", score);
     }
+
+    ofstream result;
+
+    result.open("resultats.txt", fstream::app);
+    result << "Mode: " << nb_games << " " << nb_moves << " | Score final: " << plateau.score << " | 2048 obtenu au coup: " << won << endl;
+
+    printf("Score final: %d\n", plateau.score);
+    if (won) printf("A obtenu un 2048 au coup n°%d\n", won);
+    else printf("N'a pas obtenu de 2048.\n");
 
     return 0;
 }

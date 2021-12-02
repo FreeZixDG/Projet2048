@@ -80,3 +80,6 @@ Plateau ajouteTuile(Plateau plateau);
  * @return un Plateau ou chaque ligne correspond à chaque colone de t
 */
 Plateau Transpose(Plateau plateau);
+
+
+Plateau test_deplacement_gauche(Plateau plateau);
