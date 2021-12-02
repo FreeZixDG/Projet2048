@@ -1,25 +1,32 @@
 {
-  "C_Cpp_Runner.cCompilerPath": "C:/msys64/mingw64/bin/gcc.exe",
-  "C_Cpp_Runner.cppCompilerPath": "C:/msys64/mingw64/bin/g++.exe",
-  "C_Cpp_Runner.debuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
-  "C_Cpp_Runner.warnings": [
-    "-Wall",
-    "-Wextra",
-    "-Wpedantic"
-  ],
-  "C_Cpp_Runner.compilerArgs": [],
-  "C_Cpp_Runner.includePaths": [
-    "C:/msys64/mingw64/include/ncursesw"
-  ],
-  "C_Cpp_Runner.linkerArgs": [],
-  "C_Cpp_Runner.cStandard": "",
-  "C_Cpp_Runner.cppStandard": "",
-  "C_Cpp_Runner.excludeSearch": [],
-  "C_Cpp_Runner.enableWarnings": true,
-  "C_Cpp_Runner.warningsAsError": false,
   "files.associations": {
+    "*.tcc": "cpp",
+    "bitset": "cpp",
+    "compare": "cpp",
+    "deque": "cpp",
+    "string": "cpp",
     "vector": "cpp",
-    "stdexcept": "cpp",
-    "numeric": "cpp"
+    "memory_resource": "cpp",
+    "functional": "cpp",
+    "memory": "cpp",
+    "fstream": "cpp",
+    "istream": "cpp",
+    "numeric": "cpp",
+    "ostream": "cpp",
+    "string_view": "cpp",
+    "regex": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "typeinfo": "cpp",
+    "iostream": "cpp",
+    "array": "cpp",
+    "chrono": "cpp",
+    "unordered_map": "cpp",
+    "iterator": "cpp",
+    "sstream": "cpp",
+    "stop_token": "cpp",
+    "streambuf": "cpp",
+    "thread": "cpp",
+    "utility": "cpp"
   }
 }

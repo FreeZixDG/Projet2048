@@ -1,18 +1,7 @@
-#include <stdexcept>
-#include <time.h>
-#include <math.h>
-#include <algorithm>
-#include <iostream>
 #include <string>
-#include <vector>
-#include <tuple>
+#include "Plateau.h"
 
-using namespace std;
-
-const int GAUCHE = 7, DROITE = 4, HAUT = 8, BAS = 2;
-const int W = 4;
-const int H = 4;
-typedef vector<vector<int>> Plateau;
+const int GAUCHE = 1, DROITE = 2, HAUT = 3, BAS = 4;
 
 /** génère un Plateau de dimensions 4*4 ne contenant que des 0
  *  @return un Plateau vide
@@ -63,7 +52,7 @@ Plateau deplacement(Plateau plateau, int direction);
 /** affiche un Plateau
  * @param p le Plateau
  **/
-string dessine(Plateau g);
+std::string dessine(Plateau g);
 
 /** permet de savoir si une partie est terminée
  *  @param plateau un Plateau
@@ -78,12 +67,7 @@ bool estTermine(Plateau plateau);
 bool estGagnant(Plateau plateau);
 
 
-/*
- score
- * @param plateau Plateau
- * @return le score correspondant à un plateau dans le jeu 2048
-*/
-int score(Plateau plateau);
+
 
 /* ajouteTuile
  * @param plateau Plateau
@@ -97,37 +81,5 @@ Plateau ajouteTuile(Plateau plateau);
 */
 Plateau Transpose(Plateau plateau);
 
-/* Combine_gauche
- * @param t Plateau
- * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
- * 
- * Exemple avec un Plateau t = {{2, 2, 8, 4}, {4, 4, 4, 16}} renvoie {{4, 0, 8, 4}, {8, 0, 4, 16}}
-*/
-Plateau Combine_gauche(Plateau t);
 
-/* Combine_droite
- * @param t Plateau
- * @return le plateau t auquel on a fait fusionne (et additione) vers la gauche les elements de meme valeur.
- * 
- * Exemple avec un Plateau t = {{2, 2, 8, 4}, {4, 4, 4, 16}} renvoie {{0, 4, 8, 4}, {0, 4, 8, 16}}
-*/
-Plateau Combine_droite(Plateau t);
-
-/* bougeGauche
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à gauche.
- */
-Plateau bougeGauche(Plateau t);
-
-/* bougeDroite
- * @param t Plateau
- * @return une copie de t auquel on a décalé tous les éléments non nul à droite.
- */
-Plateau bougeDroite(Plateau t);
-
-/*
- brute_score
- * @param n int
- * @return le score correspondant à une tuile de valeur "n" dans le jeu 2048
-*/
-int brute_score(int n);
+Plateau test_deplacement_gauche(Plateau plateau);

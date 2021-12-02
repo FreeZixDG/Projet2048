@@ -1,11 +1,9 @@
 #include "modele.h"
 #include "utils.h"
 
-/* len
- * @param n int, le nombre.
- * @param base int, la base dans laquelle le nombre va etre convertit. (default = 10)
- * @return int, le nombre de chiffre dans le nombre convertit en base "base".
-*/
+using namespace std;
+
+
 int len(int n, int base) {
     unsigned int number_of_digits = 0;
 
@@ -17,11 +15,7 @@ int len(int n, int base) {
     return number_of_digits;
 }
 
-/* strip
- * @param t tableau d'entier
- * @param k int, la valeur qu on veut enlever de t. (default = 0)
- * @return le tableau t auquel on a enlever tous les element valant k.
-*/
+
 vector<int> strip(vector<int> t, int k) {
 
     t.erase(remove(t.begin(), t.end(), k), t.end());
@@ -30,11 +24,8 @@ vector<int> strip(vector<int> t, int k) {
 }
 
 
-/*
- * @param t Plateau
- * @return int, La plus grande valeur du Plateau t.
-*/
-int maximumOf(Plateau t) {
+
+int maximumOf(Grille t) {
     int r = 0;
 
     for (auto i: t) {
@@ -46,4 +37,27 @@ int maximumOf(Plateau t) {
     }
 
     return r;
+}
+
+
+vector<string> split(const string txt, char ch)
+{
+    vector<string> strs;
+    size_t pos = txt.find( ch );
+    size_t initialPos = 0;
+    strs.clear();
+
+    // Decompose statement
+    while( pos != string::npos )
+    {
+        strs.push_back( txt.substr( initialPos, pos - initialPos ) );
+        initialPos = pos + 1;
+
+        pos = txt.find( ch, initialPos );
+    }
+
+    // Add the last one
+    strs.push_back( txt.substr( initialPos, min( pos, txt.size() ) - initialPos + 1 ) );
+
+    return strs;
 }
