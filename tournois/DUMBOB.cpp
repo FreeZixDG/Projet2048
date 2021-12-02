@@ -156,24 +156,50 @@ char strat_priority(Plateau plateau)
     return response;
 }
 
+
+
+Plateau deplacement(Plateau plateau, int direction)
+{
+    Plateau old_plateau = plateau;
+    switch (direction)
+    {
+    case DROITE:
+        plateau = deplacementDroite(plateau);
+        break;
+    case GAUCHE:
+        plateau =  deplacementGauche(plateau);
+        break;
+    case HAUT:
+        plateau =  deplacementHaut(plateau);
+        break;
+    case BAS:
+        plateau =  deplacementBas(plateau);
+        break;
+    default:
+        cerr << "Deplacement non-autorise!" << endl;
+        exit(-1);
+    }
+    
+    return plateau;
+}
+
 /*choose_random_move
  * @return char, H B G ou D a proba égale (1/4)
 */
-int choose_random_move()
+int choose_random_move(bool g, bool d, bool h, bool b)
 {
-    return rand() % 4 + 1;
-}
-
-char convertDirection(int v)
-{
-    switch (v)
+    
+    int c;
+    do
     {
-        case GAUCHE: return 'G';
-        case DROITE: return 'D';
-        case HAUT: return 'H';
-        case BAS: return 'B';
-        default: return -1;
-    }
+        c = rand() % 4 + 1;
+    } while( !(
+        (c == GAUCHE and g)
+     or (c == DROITE and d)
+     or (c == HAUT and h)
+     or (c == BAS and b) )
+     );
+    return c;
 }
 
 /* plays a games staring with the first_direction move, and plays randomly until it loses
@@ -185,10 +211,46 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
 {
 
     int direction = first_direction;
+    Grille old_grille;
+    bool g = 1;
+    bool d = 1;
+    bool h = 1;
+    bool b = 1;
+    int c = 0;
     do
     {
+        old_grille = plateau.grille;
         plateau = deplacement(plateau, direction);
-        direction = choose_random_move();
+        if (old_grille == plateau.grille)
+        {
+            switch (direction)
+            {
+            case GAUCHE:
+                g = 0;
+                break;
+            
+            case DROITE:
+                d = 0;
+                break;
+            
+            case HAUT:
+                h = 0;
+                break;
+            
+            case BAS:
+                b = 0;
+                break;
+            }
+        }
+
+        else
+        {
+            plateau = ajouteTuile(plateau);
+            g = 1;d = 1;h = 1;b = 1;
+        }
+
+        if (!(g or d or h or b)) break;
+        direction = choose_random_move(g, d, h, b);
         moves_ahead--;
     } while (moves_ahead != 0);
 
@@ -230,6 +292,8 @@ char strat_brute(Plateau plateau, int number_of_games, int moves_ahead)
 
 int main()
 {
+    int nb_games;
+    int nb_moves;
     srand(time(NULL));
     int actual_try = 0;
     char prev_move = '\0';
@@ -243,7 +307,8 @@ int main()
     {
         
         system("clear");
-        printf("Plateau n°%d:\n%s", actual_try, dessine(plateau).c_str());
+        printf("Plateau n°%d: (Simulating each move, %d games of %d moves)\n", actual_try, nb_games, nb_moves);
+        printf("%s", dessine(plateau).c_str());
         
         do
         {
@@ -263,13 +328,16 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            /*if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
-            else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 20);
-            else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 30);
-            else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 40);
-            else rep = strat_brute(plateau, 2000, 50);*/
+            //if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
+            //else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 20);
+            //else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 30);
+            //else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 40);
+            //else rep = strat_brute(plateau, 2000, 50);
 
-            rep = strat_brute(plateau, 2000, 3);
+            nb_games = 100;
+            nb_moves = 9999;
+
+            rep = strat_brute(plateau, nb_games, nb_moves);
             
             
             writeMove("mouvements.txt", "BOB", tries, rep);
@@ -284,17 +352,3 @@ int main()
 
     return 0;
 }
-
-
-/*int main()
-{
-    srand(time(NULL));
-    
-
-    Plateau plateau = plateauInitial();
-
-
-    cout << strat_brute(plateau);
-
-    return 0;
-}*/
