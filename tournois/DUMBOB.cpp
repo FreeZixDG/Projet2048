@@ -1,17 +1,19 @@
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <stdlib.h>
+//#include <string>
+//#include <stdlib.h>
 #include <thread>
-#include <chrono>
-#include <tuple>
+//#include <chrono>
+
 #include "../modele.h"
 #include "../utils.h"
 using namespace std;
 
-// actual best: 27408 pts
-// actual best: 35892 pts
-// actual best: 36912 pts
+// actual best: 27408
+// actual best: 35892
+// actual best: 36912
+// actual best: 50000+
+// actual best: 75948
 
 vector<int> extract_numbers(string s)
 {
@@ -265,11 +267,11 @@ char strat_brute(Plateau plateau, int number_of_games, int moves_ahead)
     int moyenne_H = 0;
     int moyenne_B = 0;
 
-    /*test if the position is valid*/
-    if (deplacement(plateau, GAUCHE).grille == plateau.grille) moyenne_G = -1;
-    if (deplacement(plateau, DROITE).grille == plateau.grille) moyenne_D = -1;
-    if (deplacement(plateau, HAUT).grille == plateau.grille) moyenne_H = -1;
-    if (deplacement(plateau, BAS).grille == plateau.grille) moyenne_B = -1;
+    /*ignore the invalid starting position*/
+    if (deplacementGauche(plateau).grille == plateau.grille) moyenne_G = -1;
+    if (deplacementDroite(plateau).grille == plateau.grille) moyenne_D = -1;
+    if (deplacementHaut(plateau).grille == plateau.grille) moyenne_H = -1;
+    if (deplacementBas(plateau).grille == plateau.grille) moyenne_B = -1;
 
     for (int k = 0; k < number_of_games / 4; k++)
     {
@@ -288,12 +290,26 @@ char strat_brute(Plateau plateau, int number_of_games, int moves_ahead)
     else return -1;
 }
 
+int count_tiles(Grille grille)
+{
+    int r = 0;
+    for (auto i: grille)
+    {
+        for (auto j: i)
+        {
+            if (j != 0) r++;
+        }
+    }
+    return r;
+}
+
 
 
 int main()
 {
-    int nb_games;
-    int nb_moves;
+    const int MAX = 999;
+    int nb_games = 101;
+    int nb_moves = 20;
     srand(time(NULL));
     int actual_try = 0;
     char prev_move = '\0';
@@ -301,24 +317,35 @@ int main()
     int tries;
     int score;
     Plateau plateau;
+    int nb_tiles;
+    string mode;
     
 
     while (1)
     {
         
-        system("clear");
-        printf("Plateau n°%d: (Simulating each move, %d games of %d moves)\n", actual_try, nb_games, nb_moves);
-        printf("%s", dessine(plateau).c_str());
+        
         
         do
         {
             printf("\rWaiting for game update n°%d", actual_try);
             fflush(stdout);
-            this_thread::sleep_for(chrono::milliseconds(50));
+            this_thread::sleep_for(chrono::milliseconds(2));
             plateau = readInfo("configuration.txt", tries, score, actual_try);
         }
         while( tries != actual_try or plateau.grille == Grille{{},{},{},{}} ); //plateau.grille != Grille({{},{},{},{}}) est au cas ou le fichier n'a pas pu lire
-        
+
+        system("clear");
+        if(nb_games == 100) mode = "Easy";
+        else if (nb_games == 1000) mode = "Medium";
+        else if (nb_games == 2000) mode = "Carefull";
+        else if (nb_games == 3000) mode = "Extreme";
+        else mode = "Custom";
+
+        printf("Plateau n°%d: (%s mode (%d:%d))\n", actual_try, mode.c_str(), nb_games, nb_moves);
+        printf("%s", dessine(plateau).c_str());
+
+
         if (estTermine(plateau))
         {
             printf("\nGame over.\n");
@@ -328,18 +355,17 @@ int main()
         if (tries == actual_try)
         {
             printf("\n");
-            //if (plateau.score < 10000) rep = strat_brute(plateau, 50, 10);
-            //else if (plateau.score < 15000) rep = strat_brute(plateau, 100, 20);
-            //else if (plateau.score < 25000) rep = strat_brute(plateau, 500, 30);
-            //else if (plateau.score < 30000) rep = strat_brute(plateau, 1000, 40);
-            //else rep = strat_brute(plateau, 2000, 50);
+            /*nb_tiles = count_tiles(plateau.grille);
+            if (nb_tiles < 5 or plateau.score < 13000) {nb_games = 100;nb_moves = 10;}
+            else if (nb_tiles < 9 or plateau.score < 20000) {nb_games = 1000;}
+            else if (nb_tiles < 11 or plateau.score < 30000) {nb_games = 2000;}
+            else {nb_games = 3000; nb_moves = MAX;}*/
 
-            nb_games = 100;
-            nb_moves = 9999;
 
+            // Calcul du meilleur coup selon BOB
             rep = strat_brute(plateau, nb_games, nb_moves);
-            
-            
+            // fin calcul
+
             writeMove("mouvements.txt", "BOB", tries, rep);
             printf("updated!\n");
             printf("Wrote movement %c\n", rep);
@@ -347,7 +373,7 @@ int main()
         }
 
 
-        printf("try: %d\nscore: %d\n", tries, score);
+        printf("score: %d\n", score);
     }
 
     return 0;
