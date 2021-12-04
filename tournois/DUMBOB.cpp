@@ -334,7 +334,7 @@ int main()
         {
             printf("\rWaiting for game update n°%d", actual_try);
             fflush(stdout);
-            this_thread::sleep_for(chrono::milliseconds(2));
+            this_thread::sleep_for(chrono::milliseconds(30));
             plateau = readInfo("configuration.txt", tries, score, actual_try);
         }
         while( tries != actual_try or plateau.grille == Grille{{},{},{},{}} ); //plateau.grille != Grille({{},{},{},{}}) est au cas ou le fichier n'a pas pu lire
@@ -347,7 +347,7 @@ int main()
                 won = actual_try;
             }
         }
-        if(nb_games == 200) mode = "Easy";
+        if(nb_games == 300) mode = "Easy";
         else if (nb_games == 3000) mode = "Extreme";
         else mode = "Custom";
 
@@ -365,11 +365,11 @@ int main()
         {
             printf("\n");
 
-            if (plateau.score >= 32000 and plateau.score <= 42000)
-                {nb_games = 10000; nb_moves = MAX;}
+            if (plateau.score >= 34000 and plateau.score <= 42000)
+                {nb_games = 3000; nb_moves = MAX;}
 
             else
-                {nb_games = 200; nb_moves = 15;}
+                {nb_games = 300; nb_moves = 10;}
 
 
             // Calcul du meilleur coup selon BOB
