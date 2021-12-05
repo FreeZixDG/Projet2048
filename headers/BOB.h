@@ -1,4 +1,4 @@
-#include "../modele.h"
+#include "modele.h"
 /*choose_random_move
  * @return char, H B G ou D a proba égale (1/4)
 */

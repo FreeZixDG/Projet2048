@@ -1,4 +1,4 @@
-#include "BOB.h"
+#include "../headers/BOB.h"
 #include <iostream>
 using namespace std;
 

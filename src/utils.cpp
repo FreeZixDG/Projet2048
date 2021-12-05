@@ -1,5 +1,5 @@
-#include "modele.h"
-#include "utils.h"
+#include "../headers/modele.h"
+#include "../headers/utils.h"
 
 using namespace std;
 

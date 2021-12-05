@@ -1,4 +1,4 @@
-#include "Plateau.h"
+#include "../headers/Plateau.h"
 using namespace std;
 
 Plateau::Plateau(Grille g, int s): grille(g), score(s), TAILLE(grille[0].size())

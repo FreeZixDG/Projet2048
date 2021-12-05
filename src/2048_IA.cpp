@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
-#include "BOB.h"
+#include "../headers/BOB.h"
 using namespace std;
 
 vector<int> extract_numbers(string s)
@@ -155,7 +155,7 @@ int main()
             printf("\rWaiting for game update n°%d", actual_try);
             fflush(stdout);
             this_thread::sleep_for(chrono::milliseconds(30));
-            plateau = readInfo("configuration.txt", tries, score, actual_try);
+            plateau = readInfo("../tournois/configuration.txt", tries, score, actual_try);
         }
         while( tries != actual_try or plateau.grille == Grille{{},{},{},{}} ); //plateau.grille != Grille({{},{},{},{}}) est au cas ou le fichier n'a pas pu lire
 
@@ -193,7 +193,7 @@ int main()
             rep = strat_brute(plateau, nb_games, nb_moves);
             // fin calcul
 
-            writeMove("mouvements.txt", "BOB", tries, rep);
+            writeMove("../tournois/mouvements.txt", "BOB", tries, rep);
             printf("updated!\n");
             printf("Wrote movement %c\n", rep);
             actual_try++;
@@ -205,7 +205,7 @@ int main()
 
     ofstream result;
 
-    result.open("resultats.txt", fstream::app);
+    result.open("../tournois/resultats.txt", fstream::app);
     result << "Mode: " << nb_games << " " << nb_moves << " | Score final: " << plateau.score << " | 2048 obtenu au coup: " << won << endl;
 
     printf("Score final: %d\n", plateau.score);

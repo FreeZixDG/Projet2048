@@ -1,5 +1,5 @@
 #include <iostream>
-#include "modele.h"
+#include "../headers/modele.h"
 using namespace std;
 
 /** Infrastructure minimale de test **/
