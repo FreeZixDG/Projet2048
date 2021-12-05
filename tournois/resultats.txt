@@ -1,30 +1,14 @@
-Mode: 200 10 | Score final: 35932 | 2048 obtenu au coup: 986
-Mode: 200 10 | Score final: 36472 | 2048 obtenu au coup: 963
-Mode: 200 10 | Score final: 27252 | 2048 obtenu au coup: 942
-Mode: 200 10 | Score final: 36156 | 2048 obtenu au coup: 945
-Mode: 200 10 | Score final: 36280 | 2048 obtenu au coup: 973
-
-
-Now testing mode 200 10 but 2000 MAX to try to break the 36000 pts barreer:
-
-Mode: 2000 999999 | Score final: 36332 | 2048 obtenu au coup: 951
-Mode: 200 10 | Score final: 32408 | 2048 obtenu au coup: 964
-Mode: 200 10 | Score final: 16152 | 2048 obtenu au coup: 0
-Mode: 150 20 | Score final: 32220 | 2048 obtenu au coup: 1023
-
-
-Now testing 150 20 but 2000 MAX to try to break the 4096 tile barreer:
-
-Mode: 400 10 | Score final: 67324 | 2048 obtenu au coup: 958
-Mode: 150 20 | Score final: 27168 | 2048 obtenu au coup: 979
-
-
-Going back to 400 10 but 4096 barreer:
-
-Mode: 400 10 | Score final: 60176 | 2048 obtenu au coup: 948
-Mode: 400 10 | Score final: 27176 | 2048 obtenu au coup: 958
-Mode: 400 10 | Score final: 16132 | 2048 obtenu au coup: 0
-Mode: 150 20 | Score final: 32256 | 2048 obtenu au coup: 944
-Mode: 3000 999999 | Score final: 36128 | 2048 obtenu au coup: 937
-Mode: 200 15 | Score final: 32520 | 2048 obtenu au coup: 951
-Mode: 10000 999999 | Score final: 36696 | 2048 obtenu au coup: 950
+Mode: 300 10 | Score final: 36252 | 2048 obtenu au coup: 959
+Mode: 300 10 | Score final: 27344 | 2048 obtenu au coup: 964
+Mode: 300 10 | Score final: 60476 | 2048 obtenu au coup: 939
+Mode: 300 10 | Score final: 51520 | 2048 obtenu au coup: 969
+Mode: 300 10 | Score final: 35412 | 2048 obtenu au coup: 961
+Mode: 300 10 | Score final: 27260 | 2048 obtenu au coup: 964
+Mode: 300 10 | Score final: 69764 | 2048 obtenu au coup: 957
+Mode: 300 10 | Score final: 32128 | 2048 obtenu au coup: 955
+Mode: 300 10 | Score final: 27464 | 2048 obtenu au coup: 945
+Mode: 3000 999999 | Score final: 36188 | 2048 obtenu au coup: 979
+Mode: 300 10 | Score final: 71036 | 2048 obtenu au coup: 946
+Mode: 300 10 | Score final: 16208 | 2048 obtenu au coup: 0
+Mode: 3000 999999 | Score final: 36452 | 2048 obtenu au coup: 952
+Mode: 300 10 | Score final: 60476 | 2048 obtenu au coup: 939

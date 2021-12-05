@@ -77,8 +77,7 @@ string dessine(Plateau g)
 {
 
     string result = "";
-    int max_number = maximumOf(g.grille);
-    int lenght_max = len(max_number);
+    int lenght_max = len( maximumOf(g.grille) );
 
     /* affiche_bord
      * @param t Plateau
