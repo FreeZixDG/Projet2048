@@ -18,3 +18,6 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead);
  * @param moves_ahead int, the number of moves the IA will make before playing the next game
 */
 char strat_brute(Plateau plateau, int number_of_games, int moves_ahead);
+
+
+Plateau deplacement_vers(Plateau plateau, int direction);

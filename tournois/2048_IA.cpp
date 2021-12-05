@@ -126,20 +126,7 @@ char strat_priority(Plateau plateau)
 
 
 
-Plateau deplacement(Plateau plateau, int direction)
-{
-    switch (direction)
-    {
-    case DROITE: return deplacementDroite(plateau);
-    case GAUCHE: return deplacementGauche(plateau);
-    case HAUT: return deplacementHaut(plateau);
-    case BAS: return deplacementBas(plateau);
-    default:
-        cerr << "Deplacement non-autorise!" << endl;
-        exit(-1);
-    }
-    return plateau;
-}
+
 
 
 
@@ -184,7 +171,6 @@ int main()
 
         printf("Plateau n°%d: (%s mode (%d:%d))\n", actual_try, mode.c_str(), nb_games, nb_moves);
         printf("%s", dessine(plateau).c_str());
-
 
         if (estTermine(plateau))
         {

@@ -1,9 +1,9 @@
 #include "BOB.h"
+#include <iostream>
 using namespace std;
 
 int choose_random_move(bool g, bool d, bool h, bool b)
 {
-    
     int c;
     do
     {
@@ -17,11 +17,22 @@ int choose_random_move(bool g, bool d, bool h, bool b)
     return c;
 }
 
-/* plays a games staring with the first_direction move, and plays randomly until it loses
- * @param plateau Plateau, the starting plateau
- * @param first_direction int, the first direction
- * @return the end score
-*/
+Plateau deplacement_vers(Plateau plateau, int direction)
+{
+    switch (direction)
+    {
+    case DROITE: return deplacementDroite(plateau);
+    case GAUCHE: return deplacementGauche(plateau);
+    case HAUT: return deplacementHaut(plateau);
+    case BAS: return deplacementBas(plateau);
+    default:
+        cerr << "Deplacement non-autorise!" << endl;
+        exit(-1);
+    }
+    return plateau;
+}
+
+
 int play_game(Plateau plateau, int first_direction, int moves_ahead)
 {
     int direction = first_direction;
@@ -34,7 +45,7 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
     do
     {
         old_grille = plateau.grille;
-        plateau = deplacement(plateau, direction);
+        plateau = deplacement_vers(plateau, direction);
         //au prochain coup, on interdit d'aller dans la direction qui n'est pas valide
         if (old_grille == plateau.grille)
         {
@@ -43,15 +54,12 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
             case GAUCHE:
                 g = 0;
                 break;
-            
             case DROITE:
                 d = 0;
                 break;
-            
             case HAUT:
                 h = 0;
                 break;
-            
             case BAS:
                 b = 0;
                 break;
@@ -63,11 +71,14 @@ int play_game(Plateau plateau, int first_direction, int moves_ahead)
         else
         {
             plateau = ajouteTuile(plateau);
-            g = 1;d = 1;h = 1;b = 1;
+            g = 1;
+            d = 1;
+            h = 1;
+            b = 1;
         }
         // si bloqué, on arrete
         if (!(g or d or h or b)) break;
-
+        
         direction = choose_random_move(g, d, h, b);
         moves_ahead--;
     } while (moves_ahead != 0);
